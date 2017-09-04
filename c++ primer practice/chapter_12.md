@@ -60,3 +60,36 @@ explicit的作用就是抑制构造函数的隐式转换
 - 缺点：必须用构造函数显示创建一个对象，不够方便简单
 
 ## 12.6
+<pre>
+using namespace std;
+vector<int>* MakeVec()
+{
+    vector<int> *a = new vector<int>;
+    return a;
+}
+vector<int>* GetVec(vector<int>* vec)
+{
+    int i;
+    while(cin >> i)
+    {
+        vec->push_back(i);
+    }
+    return vec;
+}
+void PrintVec(vector<int>* vec)
+{
+    for(auto i = vec->cbegin(); i!=vec->cend(); i++)
+        cout<< *i <<endl;
+}
+
+int main()
+{
+    vector<int> *vec = MakeVec();
+    vec = GetVec(vec);
+    PrintVec(vec);
+    delete vec;
+    vec = nullptr;
+    system("pause");
+    return 0;
+}
+</pre>
