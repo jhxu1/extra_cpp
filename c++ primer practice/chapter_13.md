@@ -776,7 +776,8 @@ StrBlobPtr是弱智能指针，计数器不增加。
 (d) `int &&r4 = vi[0]*f();`
 
 ## 13.47,13.48
-！[image](https://raw.githubusercontent.com/AugusXJ/cpp/master/c%2B%2B%20primer%20practice/image/13.47.PNG)
+
+![13.47](image/13.47.PNG)
 
 当`push`一个时会拷贝一次，如果内存不够则会开辟一块新内存，再把`vector`中已有的进行拷贝，再继续`push`。
 
