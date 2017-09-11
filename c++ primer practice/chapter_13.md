@@ -562,7 +562,7 @@ StrBlobPtr是弱智能指针，计数器不增加。
 
 ## 13.39
 ### main.cpp
-#include "main.h"
+	#include "main.h"
 
 	using namespace std;
 	void StrVec::push_back(const string &s)
@@ -786,3 +786,131 @@ StrBlobPtr是弱智能指针，计数器不增加。
 > `push`两次就是1+1+1=3次，第一个1为`push`第一个数; 第二个1是在`push`第二个数时发现空间不够，将现有的一个数拷贝到更大的空间; 第三个1是`push`第二个数。可以从图中看到三个1是如何增加的。
 
 > `push`3个string就是3+2+1=6，4个就是6+3+1=10，5个就是10+4+1=15 ... 以此类推
+
+
+## 13.49
+
+### Message
+	Message &Message::operator=(Message &&m)
+	{
+		if (&m != this)
+		{
+			remove_from_Folders();
+			contents = move(m.contents);
+			move_Folders(&m);
+		}
+		return *this;
+	}
+
+### StrVec
+	StrVec &operator = (StrVec &&s)
+	{
+		if(&s!=this)
+		{		
+			free();
+			elements = move(s.elements);
+			first_tree = move(s.first_tree);
+			cap = move(s.cap);
+		}
+		return *this;
+	}
+### String
+	String &operator=(String &&s)
+	{
+		if(s != this)
+		{
+			free();
+			begin = move(s.begin);
+			end = move(s.end);
+		}
+		return *this;
+	}
+
+## 13.50
+
+按照13.48`push`两次，会有两次移动构造，一次拷贝构造。
+
+## 13.51
+P418已经说的很清楚，使用的是移动操作，因为返回值相当于一个表达式，为右值
+
+## 13.52
+rhs是一个非引用的参数，所以需要进行拷贝初始化，依赖于实参的类型，拷贝初始化要么使用拷贝构造函数要么使用移动构造函数，左值被拷贝，右值被移动
+
+hp的第一个赋值中，右侧为左值，需要进行拷贝初始化，分配一个新的string，并拷贝hp2所指向的string
+
+hp的第二个赋值中，直接调用std::move()将一个右值绑定到hp2上，虽然移动构造函数和拷贝构造函数皆可行，但是移动构造函数是精确匹配且不会分配任何内存
+
+## 13.53
+
+`HasPtr`的拷贝赋值运算符会重新分配空间，而移动赋值运算符直接将指针赋值就行。
+
+## 13.54
+具有更快的赋值速度，但是原对象会被销毁。
+	Hasptr& operator=(Hasptr &&p)
+	{
+		ps = p.ps;
+		p.ps = nullptr;
+		return *this;
+	}
+
+## 13.55
+	void push_back(string &&s) { data->push_back(move(s)); }
+
+## 13.56
+sorted不断调用本身，无限循环，造成堆栈溢出
+
+## 13.57
+	#include <vector>  
+	#include <iostream>  
+	#include <algorithm>  
+	#include <stdlib.h>
+	
+	using std::vector;
+	using std::sort;
+	
+	class Foo {
+	public:
+		Foo sorted() && ;
+		Foo sorted() const&;
+	
+	private:
+		vector<int> data;
+	};
+	
+	Foo Foo::sorted() &&
+	{
+		sort(data.begin(), data.end());
+		std::cout << "&&" << std::endl; // debug  
+		return *this;
+	}
+	
+	Foo Foo::sorted() const &
+	{
+		//    Foo ret(*this);  
+		//    sort(ret.data.begin(), ret.data.end());  
+		//    return ret;  
+	
+		std::cout << "const &" << std::endl; // debug  
+	
+		 //    Foo ret(*this);  
+		 //    ret.sorted();     //13.56  
+		 //    return ret;  
+	
+		return Foo(*this).sorted(); //13.57  
+	}
+	
+	int main()
+	{
+		Foo().sorted(); // call "&&"  
+		Foo f;
+		f.sorted(); // call "const &"
+		system("pause");
+		return 0;
+	}
+
+# 第13章：拷贝控制总结
+
+- 主要是拷贝构造、拷贝赋值运算符、析构函数、移动构造、移动赋值运算符。
+
+- 若没有自己定义拷贝构造、拷贝赋值运算符、析构函数，会自动进行合成。
+- 移动操作会析构掉原来的对象。
