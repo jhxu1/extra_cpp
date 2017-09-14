@@ -159,7 +159,49 @@
 ## Exercise 14.8
 > 你在7.5.1节的练习7.40（第261）页中曾经选择并编写了一个类，为它定义一个输出运算符。
 
-see [Exercise 14.5](exercise-145)
+see [Exercise 14.5](#exercise-145)
+
+## Exercise 14.9
+> 为你的`Sales_data`类定义输入运算符。
+
+	// 友元函数：传入一个istream对象cin, 一个Sales_data对象， 返回一个istream对象的引用cin， 便于连输输入  
+	istream& operator>>(istream &is, Sales_data &item)
+	{
+		double price = 0;
+		cout << "输入图书编号:	";
+		is >> item.bookNo;
+		cout << "输入销售数量:	";
+		is >> item.units_sold;
+		cout << "输入图书单价:	";
+		is >> price;
+		if (is)
+			item.revenue = price * item.units_sold;
+		else
+			item = Sales_data();
+		return is;
+	}
+
+## Exercise 14.10
+> 对于`Sales_data`的输入运算符来说如果给定了下面的输入将发生什么情况？
+>
+> - (a) 0-201-99999-9 10 24.95
+> - (b) 10 24.95 0-210-99999-9
+
+- (a) 正常生成一个`Sales_data`类，其图书编号为`0-201-99999-9`，销售数量为`10`，图书单价为`24.95`，并生成对应的总价格。
+- (b) 由于输入的数据类型错误，会生成一个空的`Sales_data`对象。
+
+## Exercise 14.11
+> 下面的Sales_data输入运算符存在错误吗，若果有，请指出来。对于这个输入运算符如果仍然给定上个练习的输入将会发生什么情况？
+
+```cpp
+istream& operator>>(istream& in, Sales_data& s)
+{
+    double price;
+    in >> s.bookNo >> s.units_sold >> price;
+    s.revenue = s.units_sold * price;
+    return in;
+}
+```
 
 # 14.2 输入和输出运算符
 
