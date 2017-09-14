@@ -146,6 +146,7 @@
 ## Exercise 14.7
 > 你在13.5节的练习（470页）中曾经编写了一个`String`类，为它定义一个输出运算符。
 
+
 	ostream &operator << (ostream &os, const String s)
 	{
 		for (auto i = s.begin; i != s.end; i++)
@@ -153,10 +154,11 @@
 		return os;
 	}
 
-## 14.8
+
+## Exercise 14.8
 > 你在7.5.1节的练习7.40（第261）页中曾经选择并编写了一个类，为它定义一个输出运算符。
 
-see [14.5](README.MD)
+see [Exercise 14.5]()
 
 # 14.2 输入和输出运算符
 
