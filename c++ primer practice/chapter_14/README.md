@@ -211,6 +211,53 @@ istream& operator>>(istream& in, Sales_data& s)
 `Data`
 see [class Date](Date.cpp)
 
+## Exercise 14.13
+> 你认为`Sales_data`类还应该支持哪些其他运算符（参见表4.1，第124页）？如果有的话，请给出它们的定义。
+
+没了。
+
+## Exercise 14.14
+> 你觉得为什么调用 `operator+=`来定义`operator+`比其他方法更有效？
+
+`operator+=`比`operator+`少一个不必要的临时变量。
+
+## Exercise 14.15
+> 你在7.5.1节的练习7.40（第261页）中曾经编写了一个类，你认为它应该含有其他算数运算符吗？如果是，请实现它们；如果不是，解释原因。
+
+see [cpp](ex14_15_Date.cpp)
+
+## Exercise 14.16
+> 为你的`StrBlob`类（参见121.1节，第405页）、`StrBlobPtr`类（参见12.1.6节）、StrVec类（参见13.5节，第405页）和`String`类（参见13.5节，第470页）分别定义相等运算符和不相等运算符。
+
+`StrBlob&&StrBlobPtr`:[hpp](ex14_16_StrBlob.cpp) | [cpp](ex14_16_StrBlob.h) | [test](ex14_16_StrBlobTest.cpp)
+
+`StrVec`:[hpp](ex14_16_StrVec.h) | [cpp](ex14_16_StrVec.cpp) | [test](ex14_16_StrVecTest.cpp)
+
+`String`:[hpp](ex14_16_String.h) | [cpp](ex14_16_String.cpp) | [test](ex14_16_StringTest.cpp)
+
+## Exercise 14.17
+> 你在7.51节的练习7.40（第261页）中曾经选择并编写了一个类，你认为它应该含有相等运算符吗？如果是，请实现它；如果不是，解释原因。
+
+是。see [Exercise 14.15](ex14_15_Date.cpp)
+
+## Exercise 14.18
+> 为你的`StrBlob`类（参见121.1节，第405页）、`StrBlobPtr`类（参见12.1.6节）、StrVec类（参见13.5节，第405页）和`String`类（参见13.5节，第470页）定义关系运算符。
+
+`StrBlob&&StrBlobPtr`:[hpp](ex14_16_StrBlob.cpp) | [cpp](ex14_16_StrBlob.h) | [test](ex14_16_StrBlobTest.cpp)
+
+`StrVec`:[hpp](ex14_16_StrVec.h) | [cpp](ex14_16_StrVec.cpp) | [test](ex14_16_StrVecTest.cpp)
+
+`String`:[hpp](ex14_16_String.h) | [cpp](ex14_16_String.cpp) | [test](ex14_16_StringTest.cpp)
+
+## Exercise 14.19
+> 你在7.51节的练习7.40（第261页）中曾经选择并编写了一个类，你认为它应该含有关系运算符吗？如果是，请实现它；如果不是，解释原因。
+
+是。see [Exercise 14.15](ex14_15_Date.cpp)
+
+
+
+
+
 # 14.2 输入和输出运算符
 
 # 14.3 算数和关系运算符
