@@ -13,10 +13,10 @@ class Sales_data
 public:
 
 	// 构造函数  
-	Sales_data():bookNo(""), units_sold(0), revenue(0.0){ }
+	Sales_data() :bookNo(""), units_sold(0), revenue(0.0) { }
 
 	// 读取到当前对象中  
-	Sales_data(istream &is) { cout<<(is, *this); }
+	Sales_data(istream &is) { cout << (is, *this); }
 
 	// 返回isbn编号  
 	string isbn() const { return bookNo; }
@@ -67,7 +67,10 @@ istream& operator>>(istream &is, Sales_data &item)
 	is >> item.units_sold;
 	cout << "输入图书单价:	";
 	is >> price;
-	item.revenue = price * item.units_sold;
+	if (is)
+		item.revenue = price * item.units_sold;
+	else
+		item = Sales_data();
 	return is;
 }
 
@@ -75,7 +78,7 @@ istream& operator>>(istream &is, Sales_data &item)
 // 友元函数：传入一个ostream对象cout， 一个Sales_data对象， 返回一个ostream对象的引用cout, 便于链式输出  
 ostream& operator<<(ostream &os, const Sales_data &item)
 {
-	os << "图书编号：	"<<item.isbn() << "	销售数量：	" << item.units_sold << "	总收益：	 "
+	os << "图书编号：	" << item.isbn() << "	销售数量：	" << item.units_sold << "	总收益：	 "
 		<< item.revenue << "	均价：	" << item.avg_price();
 	return os;
 }
@@ -90,10 +93,10 @@ Sales_data operator+(const Sales_data &a, const Sales_data &b)
 int main()
 {
 	Sales_data total;
-	if (cin>>(cin, total))  // 读取对象数据， 存入total中， 并返回cin   
+	if (cin >> (cin, total))  // 读取对象数据， 存入total中， 并返回cin   
 	{
 		Sales_data trans;
-		if(cin >> (cin, trans))
+		if (cin >> (cin, trans))
 		{
 			if (total.isbn() == trans.isbn()) // 判断当前isbn和前一个isbn是否相等  
 			{
@@ -101,12 +104,12 @@ int main()
 			}
 			else
 			{
-				cout<<(cout, total) << endl; // 输出当前对象  
+				cout << (cout, total) << endl; // 输出当前对象  
 				total = trans;  // 更新当前对象  
 			}
 		}
 
-		cout<<(cout, total) << endl; // 输出当前对象(最后的对象)  
+		cout << (cout, total) << endl; // 输出当前对象(最后的对象)  
 	}
 	else
 	{
