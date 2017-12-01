@@ -11,11 +11,11 @@
 
 using namespace std;
 
-const string node_file = "123.txt";
+const string node_file = "oregan.txt";
 const float final_point = 1;
 const float first_point = 0.2;
 
-float frac = 0.8;
+float frac = 0.3;
 
 int main()
 {
@@ -31,11 +31,11 @@ int main()
 	outfile.close();
 
 	outfile.open("mincost.txt");
-	while(frac<1)
+	while(frac<0.33)
     {
          double t = ne.getLambda1()*frac;
          cout<<"****threshold: "<<t<<"  ****"<<endl;
-         ne.subsidy(2);
+         //ne.subsidy(2);
          outfile<<t<<"\t"<<ne.HDG(t)<<endl;
          frac+=0.1;
     }

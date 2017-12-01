@@ -1,3 +1,0 @@
-<<stage 1>> HDG  num:  1	maxeigenV:  6.09112
-<<stage 1>> HDG  num:  2	maxeigenV:  4.65156
-<<stage 2>> HDG  num:  2	maxeigenV:  6.15434

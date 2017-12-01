@@ -8,7 +8,7 @@ class Node;
 const double ECgame::C = 1;             //接种花费
 const double ECgame::L = 0;             //未接种未染病花费
 const double ECgame::Le = 2;            //染病花费
-const int ECgame::size = 34;          //节点个数
+const int ECgame::size = 10670;          //节点个数
 const float ECgame::learning_rate = 0.1;	//RLA算法学习率
 double ECgame::T = 0;
 
@@ -104,7 +104,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
 
     while(index < pai.size())
     {
-        num++;
+        num--;
         pai[index]->strategies = 1;
         //恢复节点编号
         add_flag(index,pai[index]->fixflag,pai);
@@ -116,7 +116,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
         //若去接种节点之后，特征值大于T，则重新接种该节点
         if(l > T)
         {
-            num--;
+            num++;
             pai[index]->strategies = 0;
             //移除节点编号
             remove_flag(index,pai);
