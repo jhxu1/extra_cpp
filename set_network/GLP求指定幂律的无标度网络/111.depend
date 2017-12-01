@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1508413336 source:c:\users\augus\desktop\111\main.cpp
+	<stdio.h>
+	<time.h>
+	<math.h>
+	<stdlib.h>
+	<string.h>
+	<fstream>
+
+1504609484 c:\users\augus\desktop\111\main.h
+	<string>
+	<iostream>
+	<cctype>
+	<memory>
+	<vector>
+	<map>
+	<set>
+	<fstream>
+	<sstream>
+

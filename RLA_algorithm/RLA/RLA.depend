@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1511423910 source:c:\users\augus\desktop\codeblock\rla_algorithm\rla\main.cpp
+	<random>
+	<vector>
+	<time.h>
+	<algorithm>
+	<fstream>
+	<iostream>
+

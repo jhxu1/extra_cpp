@@ -1,0 +1,46 @@
+# depslib dependency file v1.0
+1509156921 source:c:\users\augus\desktop\111\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<vector>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1508315945 c:\users\augus\desktop\111\main.h
+
+1508388746 c:\users\augus\desktop\111\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1509156960 c:\users\augus\desktop\111\ecgame.h
+	<algorithm>
+	<vector>
+	"Node.h"
+	"tool.h"
+
+1509100818 c:\users\augus\desktop\111\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1509156366 source:c:\users\augus\desktop\111\ecgame.cpp
+	"ECgame.h"
+
+1508388874 source:c:\users\augus\desktop\111\node.cpp
+	"Node.h"
+
+1509156931 source:c:\users\augus\desktop\111\tool.cpp
+	"tool.h"
+
+1511339242 source:c:\users\augus\desktop\codeblock\111\main.cpp
+	<vector>
+	<iostream>
+	<fstream>
+	<stdlib.h>
+
