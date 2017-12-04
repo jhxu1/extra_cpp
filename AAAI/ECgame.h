@@ -45,7 +45,9 @@ public:
 	double LDG(double t);
 	void RLA_algorithm(double t);
 	void restrain_flag();
-	void subsidy(int num);
+	void subsidy(std::vector<Node*> pai);
+	void init();
+	std::vector<int> vacc_info;
 private:
 	double iterative_secure(double t,std::vector<Node*> &pai);
     void remove_flag(int index, std::vector<Node*> &pai);

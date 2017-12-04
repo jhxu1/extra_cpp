@@ -39,22 +39,22 @@ void toMatrix(std::vector<std::vector<double>> &matrix, const std::vector<Node*>
 	int size2 = count_if(nodes.begin(), nodes.end(), [](Node *n) {return n->strategies == 1; });
 	for (size_t i=0;i<size;i++)
 		matrix.push_back(std::vector<double>(size, 0));
-	for (int i = 0; i < nodes.size(); i++)
-	{
-	    //ÒÆ³ý½Úµã±àºÅ
-		if (nodes[i]->strategies == 0 && nodes[i]->flag != -1)
-		{
-		    cout<<"something wrong in toMatrix"<<endl;
-			for (int j = 0; j < nodes.size(); j++)
-			{
-				if (nodes[j]->flag > nodes[i]->flag)
-				{
-					nodes[j]->flag--;
-				}
-			}
-			nodes[i]->flag = -1;
-		}
-	}
+//	for (int i = 0; i < nodes.size(); i++)
+//	{
+//	    //ÒÆ³ý½Úµã±àºÅ
+//		if (nodes[i]->strategies == 0 && nodes[i]->flag != -1)
+//		{
+//		    cout<<"something wrong in toMatrix"<<endl;
+//			for (int j = 0; j < nodes.size(); j++)
+//			{
+//				if (nodes[j]->flag > nodes[i]->flag)
+//				{
+//					nodes[j]->flag--;
+//				}
+//			}
+//			nodes[i]->flag = -1;
+//		}
+//	}
 	for(int i=0;i<size;i++)
     {
         if(temp[i]->strategies == 1)

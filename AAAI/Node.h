@@ -17,7 +17,7 @@ public:
 	~Node() = default;
 	size_t degree() { return neighbours.size(); }
 	std::vector<Node*> nei() { return neighbours; }
-	int getFlag() { return flag; }
+	int getFlag() { return fixflag; }
 	bool ifNei(Node *A);			//if this node is a nighbour of Node A
 	int strategies;
 	bool ifGetSubsidy;

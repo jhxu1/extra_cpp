@@ -8,7 +8,7 @@ class Node;
 const double ECgame::C = 1;             //接种花费
 const double ECgame::L = 0;             //未接种未染病花费
 const double ECgame::Le = 2;            //染病花费
-const int ECgame::size = 10670;          //节点个数
+const int ECgame::size = 34;          //节点个数
 const float ECgame::learning_rate = 0.1;	//RLA算法学习率
 double ECgame::T = 0;
 
@@ -17,48 +17,43 @@ void ECgame::readData(const std::string &filename)
 {
 	nodes = inputData(filename);
 	lambda1 = Tool::getMaxEigen(nodes);
-	cout << "lambda1:  " << lambda1 << endl;
+	//cout << "lambda1:  " << lambda1 << endl;
 }
 
-void NE::remove_flag(int index, vector<Node*> &pai)
-{
-    for (int j = 0; j < pai.size(); j++)
-    {
-        if (pai[j]->flag > pai[index]->flag)
-        {
-            pai[j]->flag--;
-        }
-    }
-    pai[index]->flag = -1;
-}
+//void NE::remove_flag(int index, vector<Node*> &pai)
+//{
+//    for (int j = 0; j < pai.size(); j++)
+//    {
+//        if (pai[j]->flag > pai[index]->flag)
+//        {
+//            pai[j]->flag--;
+//        }
+//    }
+//    pai[index]->flag = -1;
+//}
 
-void NE::add_flag(int index, int flag, vector<Node*> &pai)
-{
-    int f = flag; int count = 0;
-    for (int j = 0; j < pai.size(); j++)
-    {
-        if (pai[j]->fixflag < f && pai[j]->strategies == 0)
-            count++;
-    }
-    pai[index]->flag = f-count;
-    for (int j = 0; j < pai.size(); j++)
-    {
-        if (pai[j]->flag >= pai[index]->flag && j!=index)
-        {
-            pai[j]->flag++;
-        }
-    }
-}
+//void NE::add_flag(int index, int flag, vector<Node*> &pai)
+//{
+//    int f = flag; int count = 0;
+//    for (int j = 0; j < pai.size(); j++)
+//    {
+//        if (pai[j]->fixflag < f && pai[j]->strategies == 0)
+//            count++;
+//    }
+//    pai[index]->flag = f-count;
+//    for (int j = 0; j < pai.size(); j++)
+//    {
+//        if (pai[j]->flag >= pai[index]->flag && j!=index)
+//        {
+//            pai[j]->flag++;
+//        }
+//    }
+//}
 
 double NE::iterative_secure(double t,vector<Node*> &pai)
 {
 	T = t; size_t size = nodes.size();
-	cout<<pai.size()<<endl;
 
-	//ofstream outfile("BUG_fix.txt", ios::app);
-	//for (auto i : pai)
-	//	outfile << i->fixflag << "\t" << i->degree() << endl;
-	//outfile << "---------------------" << endl;
 
 	double l = Tool::getMaxEigen(pai);
 	cout<<"After subsidy MaxEigen: "<<l<<endl;
@@ -72,16 +67,12 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
             pai[index]->strategies = 0;
         else
         {
-            if(pai[index]->flag != -1)
-                cout<<"something wrong in \"iterative_secure\""<<endl;
-            else
             {
                 index--;
                 continue;
             }
         }
-        //移除节点编号
-        remove_flag(index,pai);
+
 
 		l = Tool::getMaxEigen(pai);
 		if(l==-1)
@@ -96,7 +87,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
     if(index >= pai.size())
     {
         int vacc_num = count_if(pai.begin(), pai.end(), [](Node* n){return n->strategies == 0;});
-		restrain_flag();                //重置编号
+//		restrain_flag();                //重置编号
 		for (auto i : pai)				//重置策略
 			i->strategies = 1;
         return C*vacc_num*1.0;
@@ -107,7 +98,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
         num--;
         pai[index]->strategies = 1;
         //恢复节点编号
-        add_flag(index,pai[index]->fixflag,pai);
+//        add_flag(index,pai[index]->fixflag,pai);
 
         l = Tool::getMaxEigen(pai);
         if(l==-1)
@@ -119,15 +110,19 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
             num++;
             pai[index]->strategies = 0;
             //移除节点编号
-            remove_flag(index,pai);
+//            remove_flag(index,pai);
         }
         cout<<"<<stage 2>>   num:  "<<num<<"\tmaxeigenV:  "<<l<<endl;
         index++;
     }
 	int vacc_num = count_if(pai.begin(), pai.end(), [](Node* n){return n->strategies == 0;});
-    restrain_flag();                //重置编号
-	for (auto i : pai)				//重置策略
-		i->strategies = 1;
+//    restrain_flag();                //重置编号
+	for (auto i : pai)
+	{
+	    if(i->strategies ==0)
+            vacc_info.push_back(i->getFlag());
+	}
+
 	return C*vacc_num*1.0;
 }
 
@@ -202,24 +197,30 @@ void NE::RLA_algorithm(double T)
 
 
 //重置nodes的编号
-void NE::restrain_flag()
-{
-    for(int i=0;i<nodes.size();i++)
-        nodes[i]->flag = nodes[i]->fixflag;
-}
+//void NE::restrain_flag()
+//{
+//    for(int i=0;i<nodes.size();i++)
+//        nodes[i]->flag = nodes[i]->fixflag;
+//}
 
 //补助
-void NE::subsidy(int num)
+void NE::subsidy(vector<Node*> pai)
 {
-    vector<Node*> pai = nodes;
-    sort(pai.begin(),pai.end(),[](Node* n1,Node *n2){return n1->degree() > n2->degree(); });
-    int chosed_num = 0;
-    while(chosed_num < num)
+    for(auto i:pai)
     {
-        pai[chosed_num]->ifGetSubsidy = true;
-		pai[chosed_num]->strategies = 1;
-        remove_flag(chosed_num, pai);
-        chosed_num ++;
+        i->ifGetSubsidy = true;
+        i->strategies = 1;
     }
+}
+
+void NE::init()
+{
+    vacc_info.clear();
+	for (auto i : nodes)
+	{
+		i->flag = i->fixflag;
+		i->strategies = 1;
+		i->ifGetSubsidy = false;
+	}
 }
 
