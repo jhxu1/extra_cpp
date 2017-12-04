@@ -5,11 +5,11 @@ using namespace std;
 
 class Node;
 
-const double ECgame::C = 1;             //接种花费
+const double ECgame::C = 0.6;             //接种花费
 const double ECgame::L = 0;             //未接种未染病花费
-const double ECgame::Le = 2;            //染病花费
+const double ECgame::Le = 1;            //染病花费
 const int ECgame::size = 34;          //节点个数
-const float ECgame::learning_rate = 0.2;	//RLA算法学习率
+const float ECgame::learning_rate = 0.1;	//RLA算法学习率
 double ECgame::T = 0;
 
 
@@ -162,35 +162,61 @@ void NE::RLA_algorithm(double T)
 	size_t size = nodes.size();
 	vector<float> pi(size, 0.5);
 	vector<double> payoff(size);
-	int t = 0;
+	int times = 0;
 	default_random_engine engine(time(nullptr));		//随机数种子
 	uniform_real_distribution<double> u(0, 1);
 	while (true)
 	{
+	    int vacc_num = 0;
 		for (int i = 0; i < size; i++)
 		{
 			// 2) At every time step t, each node i invests with probability
 			// pi(t).This determines his pure action σi(t).
 			if (u(engine) > pi[i])
-				nodes[i]->strategies = 0;
+            {
+                nodes[i]->strategies = 1;
+            }
 			else
-				nodes[i]->strategies = 1;
+            {
+                nodes[i]->strategies = 0;
+                vacc_num++;
+            }
+
 		}
 		// 3) Each player i obtains his payoff Si(σi(t); σ ¯(t))
 		double l = Tool::getMaxEigen(nodes);
 		for (int i = 0; i < size; i++)
 		{
 			if (nodes[i]->strategies == 0)
-				payoff[i] = L;
+				payoff[i] = C;
 			else
 				payoff[i] = l < T ? 0 : Le;
-			payoff[i] /= L + Le;
+			payoff[i] /= C + Le;
 		}
 		// 4) Each node i updates its probability according to the following rule :
 		for (int i = 0; i < size; i++)
 		{
 			pi[i] = pi[i] + learning_rate * (1-payoff[i]) * (1 - nodes[i]->strategies - pi[i]);
 		}
+		times++;
+		//cout<<times<<"\t"<<vacc_num<<endl;
+		cout<<times<<"\t"<<pi[0]<<"\t"<<payoff[0]<<"\t"<<nodes[0]->strategies<<endl;
+
+		bool flag = true;
+		for(int i=0;i<size;i++)
+        {
+            if(pi[i]>0.01 && pi[i]<0.99)
+            {
+                flag = false;
+                break;
+            }
+        }
+        if(flag == true)
+        {
+            cout<<"final vacc_num:   "<<vacc_num<<endl;
+            break;
+        }
+
 	}
 }
 
