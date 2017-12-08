@@ -40,7 +40,7 @@
 
 1508315945 c:\users\augus\desktop\codeblock\aaai\main.h
 
-1512182194 source:d:\data\cpp\aaai\ecgame.cpp
+1512704767 source:d:\data\cpp\aaai\ecgame.cpp
 
 1512113556 source:d:\data\cpp\aaai\node.cpp
 	"Node.h"
@@ -67,7 +67,7 @@
 1512120640 source:d:\data\cpp\aaai\tool.cpp
 	"tool.h"
 
-1512182192 source:d:\data\cpp\aaai\main.cpp
+1512726619 source:d:\data\cpp\aaai\main.cpp
 	<fstream>
 	<stdlib.h>
 	<iostream>

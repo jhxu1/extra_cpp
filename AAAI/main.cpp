@@ -11,7 +11,7 @@
 
 using namespace std;
 
-const string node_file = "123.txt";
+const string node_file = "random.txt";
 const float final_point = 1;
 const float first_point = 0.2;
 
@@ -60,14 +60,15 @@ int main()
 ////        }
 ////    }
     vector<Node*> subsidyNode;
-    subsidyNode.push_back(ne.nodes[0]);
-    subsidyNode.push_back(ne.nodes[33]);
+//    subsidyNode.push_back(ne.nodes[0]);
+ //   subsidyNode.push_back(ne.nodes[33]);
 	while(frac<1)
     {
+        ne.init();
          double t = ne.getLambda1()*frac;
          cout<<"****threshold: "<<t<<"  ****"<<endl;
-         ne.subsidy(subsidyNode);
-         outfile<<t<<"\t"<<ne.HDG(t)+2<<endl;
+        // ne.subsidy(subsidyNode);
+         outfile<<t<<"\t"<<ne.LDG(t)<<endl;
          frac+=0.1;
     }
 

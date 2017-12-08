@@ -106,5 +106,19 @@
 1512652950 source:d:\data\cpp\aaai小算例实验\tool.cpp
 	"tool.h"
 
-1512649688 source:d:\data\cpp\aaai小算例实验\ecgame.cpp
+1512713270 source:d:\data\cpp\aaai小算例实验\ecgame.cpp
+
+1512718371 source:d:\data\cpp\aaai小算例实验\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1512092811 d:\data\cpp\aaai小算例实验\main.h
 

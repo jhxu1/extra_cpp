@@ -7,14 +7,24 @@
 			<Cursor1 position="739" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="ECgame.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+	<File name="tool.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="7" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1246" topLine="15" />
+			<Cursor1 position="1093" topLine="44" />
 		</Cursor>
 	</File>
-	<File name="Node.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
+	<File name="ECgame.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1238" topLine="32" />
+			<Cursor1 position="955" topLine="9" />
+		</Cursor>
+	</File>
+	<File name="ECgame.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="271" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2755" topLine="92" />
 		</Cursor>
 	</File>
 	<File name="tool.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
@@ -27,19 +37,9 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="ECgame.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
+	<File name="Node.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="382" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1545" topLine="40" />
-		</Cursor>
-	</File>
-	<File name="tool.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="7" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1235" topLine="56" />
+			<Cursor1 position="1238" topLine="32" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
