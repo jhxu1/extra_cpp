@@ -24,9 +24,9 @@ private:
 };
 
 const int SIZE = 15;
-const double C = 0.1;             //接种花费
+const double C = 0.4;             //接种花费
 const double L = 0;             //未接种未染病花费
-const double Le = 1;            //染病花费
+const double Le = 0.5;            //染病花费
 const float learning_rate = 0.2;	//RLA算法学习率
 const float TAO = 2.0/3;
 vector<Node*> nodes;
@@ -106,7 +106,7 @@ void RLA_algorithm(double T)
 		// 4) Each node i updates its probability according to the following rule :
 		for (int i = 0; i < size; i++)
 		{
-			pi[i] = pi[i] + learning_rate * (1-payoff[i]) * (1 - nodes[i]->strategies - pi[i]);
+			pi[i] = pi[i] + learning_rate * -payoff[i] * (1 - nodes[i]->strategies - pi[i]);
 		}
 		times++;
 		cout <<times<<"\t"<< pi[0] << "\t"<<payoff[0]<<"\t"<<nodes[0]->strategies<<endl;
