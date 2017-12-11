@@ -11,7 +11,8 @@ using namespace std;
 
 Agent *Player;
 
-int SUMLINKS=(SIZE*K)/2;
+//int SUMLINKS=(SIZE*K)/2;                                          //随机网络
+int SUMLINKS=( ( SIZE*K-(K-2)*INI_NODES )/2 );                      //无标度网络
 int *edge_sta;
 int *edge_end;
 
@@ -24,7 +25,7 @@ void Set_Random_net()
 
 
     ifstream infile;
-    infile.open("10w.csv");
+    infile.open("sc-free.txt");
     int i;
 
     for(i=0;i<SIZE;i++)
@@ -34,7 +35,7 @@ void Set_Random_net()
     for(i=0;i<SUMLINKS;i++)
     {
         infile>>edge_sta[i];
-        infile>>unused>>edge_end[i];
+        infile>>edge_end[i];
         //cout<<edge_sta[sum]<<"\t"<<edge_end[sum]<<endl;
         Player[edge_sta[i]].degree++;
         Player[edge_end[i]].degree++;

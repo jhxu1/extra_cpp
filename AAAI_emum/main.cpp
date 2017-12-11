@@ -29,6 +29,8 @@ void enumerate(ostream &outfile, NE &ne, int num, vector<int> &sub_index, vector
         ne.init();
         for(auto it:sub_index)
         {
+            if(it == -1)
+                break;
             ne.nodes[it]->strategies = 0;
             outfile<<it<<" ";
         }
@@ -118,8 +120,17 @@ vector<double> find_maxNE(ostream &outfile, vector<int> sub_index, double l, NE 
         if(flag == 1)
             break;
         stringstream ss;
-        ss<<"result\\index_";
-        ss<<sub_index[0]<<","<<sub_index[1]<<"\\";
+        if(sub_index[0] == -1)
+        {
+            ss<<"result\\index_NULL\\";
+            sub_index.clear();
+        }
+        else
+        {
+            ss<<"result\\index_";
+            ss<<sub_index[0]<<","<<sub_index[1]<<"\\";
+        }
+
         ss<<num<<".txt";
         infile.open(ss.str());
         string s;
@@ -209,6 +220,47 @@ vector<double> findmax(vector<vector<double>> V)
     }
     return result;
 }
+
+void Nosubsidy(NE &ne)
+{
+//    vector<int>sub_index;
+//    sub_index.push_back(-1);sub_index.push_back(-1);
+//    vector<int> to_vaccinate;
+//    for(int k=0;k<ECgame::size;k++)
+//    {
+//        to_vaccinate.push_back(k);
+//    }
+//    vector<int> numpy;
+//    for(int num = 0;num<ECgame::size;num++)
+//    {
+//        stringstream ss;
+//        ss<<"result\\index_NULL";
+//        CreateDirectory(ss.str().c_str(), NULL);
+//        ss<<"\\"<<num<<".txt";
+//        cout<<ss.str()<<endl;
+//        ofstream outfile(ss.str());
+//        enumerate(outfile, ne,num,sub_index, to_vaccinate,numpy);
+//    }
+    ofstream outfile("max NE.txt");
+    ofstream outfile1("max data.txt");
+    while(frac<1)
+    {
+        double l = ne.lambda1 * frac;
+        vector<double> result;
+        vector<int> sub;
+        sub.push_back(-1);sub.push_back(-1);
+        result=find_maxNE(outfile1, sub, l, ne);
+        for(auto it:result)
+        {
+            cout<<it<<" ";
+            outfile<<it<<" ";
+        }
+
+        outfile<<endl;
+        frac+=0.1;
+    }
+}
+
 int main()
 {
 	//used to calculate time
@@ -216,7 +268,8 @@ int main()
 	double totaltime;
 	start = clock();
     NE ne(node_file);
-
+    Nosubsidy(ne);
+    // 有补助
 //    for(int i=0;i<ECgame::size;i++)
 //    {
 //        for(int j=i+1;j<ECgame::size;j++)
@@ -244,27 +297,27 @@ int main()
 //    }
 
 
-    ofstream outfile("min NE.txt");
-    ofstream outfile1("min data.txt");
-    while(frac<1)
-    {
-        double l = ne.lambda1 * frac;
-        vector<vector<double>> results;
-        for(int i=0;i<ECgame::size;i++)
-        {
-            for(int j=i+1;j<ECgame::size;j++)
-            {
-                vector<int> sub_index;
-                sub_index.push_back(i);sub_index.push_back(j);
-                results.push_back(find_maxNE(outfile1, sub_index, l, ne));
-            }
-        }
-        vector<double> result = findmin(results);
-        for(auto it:result)
-            outfile<<it<<" ";
-        outfile<<endl;
-        frac+=0.1;
-    }
+//    ofstream outfile("max NE.txt");
+//    ofstream outfile1("max data.txt");
+//    while(frac<1)
+//    {
+//        double l = ne.lambda1 * frac;
+//        vector<vector<double>> results;
+//        for(int i=0;i<ECgame::size;i++)
+//        {
+//            for(int j=i+1;j<ECgame::size;j++)
+//            {
+//                vector<int> sub_index;
+//                sub_index.push_back(i);sub_index.push_back(j);
+//                results.push_back(find_maxNE(outfile1, sub_index, l, ne));
+//            }
+//        }
+//        vector<double> result = findmin(results);
+//        for(auto it:result)
+//            outfile<<it<<" ";
+//        outfile<<endl;
+//        frac+=0.1;
+//    }
 
 
 

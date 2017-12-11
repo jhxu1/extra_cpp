@@ -11,12 +11,22 @@
 
 using namespace std;
 
-const string node_file = "random.txt";
+const string node_file = "sc-free.txt";
 const float final_point = 1;
 const float first_point = 0.2;
 
 float frac = 0.2;
 const int subsidyNum = 2;
+
+vector<int> load_EI_sort()
+{
+    ifstream infile("EI_sort.txt");
+    vector<int> EI_sort;
+    int temp;
+    while(infile>>temp)
+        EI_sort.push_back(temp);
+    return EI_sort;
+}
 
 int main()
 {
@@ -27,47 +37,26 @@ int main()
 
 	//处理节点
 	NE ne(node_file);
-//	ofstream out("node.txt");
-//	for(auto i:ne.nodes)
-//    {
-//        out<<i->getFlag()<<"\t"<<i->degree()<<endl;
-//    }
+
+
 	ofstream outfile("degree.csv");
 	Tool::outdegree(outfile, ne.nodes);
 	outfile.close();
 
 	outfile.open("vacc_info.txt");
-//	double t = ne.getLambda1()*frac;
-//	cout<<"****threshold: "<<t<<"  ****"<<endl;
-//	outfile<<"threshold\t"<<t<<endl;
-//	outfile<<"no subsidy\t"<<ne.HDG(t)<<"\t";
-////	for(auto info:ne.vacc_info)
-////        outfile<<info<<",";
-////    outfile<<endl;
-////	for(int i=0;i<ECgame::size;i++)
-////    {
-////        for(int j=i+1;j<ECgame::size;j++)
-////        {
-////			ne.init();
-////            vector<Node*> subsidyNode;
-////            subsidyNode.push_back(ne.nodes[i]);
-////            subsidyNode.push_back(ne.nodes[j]);
-////            ne.subsidy(subsidyNode);
-////            outfile<<ne.nodes[i]->getFlag()<<","<<ne.nodes[j]->getFlag()<<"\t"<<ne.HDG(t)+2<<"\t";
-////            for(auto info:ne.vacc_info)
-////                outfile<<info<<",";
-////            outfile<<endl;
-////        }
-////    }
+    vector<int> EI_sort = load_EI_sort();
     vector<Node*> subsidyNode;
-//    subsidyNode.push_back(ne.nodes[0]);
- //   subsidyNode.push_back(ne.nodes[33]);
+    for(int i=0;i<subsidyNum;i++)
+    {
+        int index = EI_sort[i];
+        subsidyNode.push_back(ne.nodes[index]);
+    }
 	while(frac<1)
     {
         ne.init();
          double t = ne.getLambda1()*frac;
          cout<<"****threshold: "<<t<<"  ****"<<endl;
-        // ne.subsidy(subsidyNode);
+         ne.subsidy(subsidyNode);
          outfile<<t<<"\t"<<ne.LDG(t)<<endl;
          frac+=0.1;
     }

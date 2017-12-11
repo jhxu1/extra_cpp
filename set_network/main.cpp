@@ -159,9 +159,9 @@ void Set_SCfree_net( void )                                            //set up 
 void Save_net()
 {
     ofstream outfile;
-    Set_Random_net();
+    Set_SCfree_net();
     //Set_ChungLu_net(2);
-    outfile.open("random.txt");
+    outfile.open("sc-free.txt");
     for(int i=0;i<SUMLINKS;i++)
     {
         outfile<<edge_sta[i]<<" "<<edge_end[i]<<endl;

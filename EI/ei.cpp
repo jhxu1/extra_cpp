@@ -18,7 +18,7 @@ using namespace std;
 
 #define EMPTY (-SIZE-1)
 #define MAX 10000000
-#define Sq_c 0.002
+#define Sq_c 0.03
 
 
 int *ptr;//做团簇时用，该值为正数指向簇中某一个值，簇中总有一个点指向根节点，非最大值的负值表示该团簇的大小
@@ -400,7 +400,7 @@ void testEI()
     vector<int> cand(CandidateNum);
 
     double Sq=0;
-
+    vector<int> sort_result;
     while(changeSize<SIZE)
     {
         double q=((SIZE-changeSize)*1.0)/SIZE;
@@ -522,8 +522,6 @@ void testEI()
                 }
             }
         }
-        if(changeSize==750)
-            cout<<endl;
 
         //已找到要改变状态的节点k
 //        outfiletest<<"已改变的节点个数： "<<changeSize<<endl;
@@ -533,7 +531,7 @@ void testEI()
 //        outfiletest<<"state[k]: "<<state[k]<<endl;
 
         changeState(k);
-
+        sort_result.push_back(k);
 //        outfiletest<<"------------改变后-------------"<<endl;
 //        outfiletest<<"ptr[k]: "<<ptr[k]<<endl;
 //        outfiletest<<"state[k]: "<<state[k]<<endl;
@@ -556,6 +554,11 @@ void testEI()
         cout<<"完成一个，完成的个数为："<<changeSize<<"已使用的时间： "<<dur/CLOCKS_PER_SEC<<endl;
 
     }
+    //输出排序文件
+    ofstream outfile_sort_result("EI_sort.txt");
+    for(auto it = sort_result.rbegin();it!=sort_result.rend();it++)
+        outfile_sort_result<<*it<<endl;
+    outfile_sort_result.close();
 
     clock_t end_EI=clock();
     dur=(double)(end_EI-end_dangerScore );

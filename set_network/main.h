@@ -4,8 +4,8 @@
 #include<vector>
 using namespace std;
                                                            //Scale-Free Networks的宏定义
-#define SIZE  15                                           //节点数
-#define K 2                                                     //平均度,必须为偶数
+#define SIZE  1000                                           //节点数
+#define K 4                                                     //平均度,必须为偶数
 #define INI_NODES  3                                           //初始节点数,k为4就为2，
 
 

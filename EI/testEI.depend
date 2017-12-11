@@ -36,3 +36,40 @@
 
 1511439932 c:\users\augus\desktop\testei\ei.h
 
+1512014806 source:d:\data\cpp\ei\dangerscore.cpp
+	"main.h"
+	<fstream>
+	<vector>
+	<iostream>
+
+1512958204 d:\data\cpp\ei\main.h
+	<vector>
+
+1511439927 source:d:\data\cpp\ei\rng.cpp
+
+1512958490 source:d:\data\cpp\ei\ei.cpp
+	"main.h"
+	"DangerScore.h"
+	<vector>
+	<iostream>
+	<cmath>
+	<fstream>
+	"RNG.h"
+	<ctime>
+
+1511439939 d:\data\cpp\ei\dangerscore.h
+
+1511439928 d:\data\cpp\ei\rng.h
+
+1512958820 source:d:\data\cpp\ei\main.cpp
+	<iostream>
+	<ctime>
+	<fstream>
+	<stdlib.h>
+	<vector>
+	"main.h"
+	"RNG.h"
+	"ei.h"
+
+1511439932 d:\data\cpp\ei\ei.h
+

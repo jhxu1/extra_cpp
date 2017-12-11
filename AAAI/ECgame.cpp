@@ -8,7 +8,7 @@ class Node;
 const double ECgame::C = 1;             //接种花费
 const double ECgame::L = 0;             //未接种未染病花费
 const double ECgame::Le = 2;            //染病花费
-const int ECgame::size = 15;          //节点个数
+const int ECgame::size = 1000;          //节点个数
 const float ECgame::learning_rate = 0.2;	//RLA算法学习率
 double ECgame::T = 0;
 
