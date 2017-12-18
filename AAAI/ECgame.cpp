@@ -90,7 +90,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
 //		restrain_flag();                //重置编号
 		for (auto i : pai)				//重置策略
 			i->strategies = 1;
-        return C*vacc_num*1.0;
+        return C*(vacc_num+subsidyNum)*1.0;
     }
 
     while(index < pai.size())
@@ -123,7 +123,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
             vacc_info.push_back(i->getFlag());
 	}
 
-	return C*vacc_num*1.0;
+	return C*(vacc_num+subsidyNum)*1.0;
 }
 
 double NE::HDG(double t)

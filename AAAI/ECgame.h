@@ -5,6 +5,7 @@
 #include <time.h>
 #include "Node.h"
 #include "tool.h"
+#include "main.h"
 
 class Node;
 void deleteNode(std::vector<Node*>);

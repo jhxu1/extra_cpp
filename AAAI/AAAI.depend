@@ -40,7 +40,7 @@
 
 1508315945 c:\users\augus\desktop\codeblock\aaai\main.h
 
-1512911336 source:d:\data\cpp\aaai\ecgame.cpp
+1513599312 source:d:\data\cpp\aaai\ecgame.cpp
 
 1512113556 source:d:\data\cpp\aaai\node.cpp
 	"Node.h"
@@ -51,13 +51,14 @@
 	<fstream>
 	"ECgame.h"
 
-1512115874 d:\data\cpp\aaai\ecgame.h
+1513577644 d:\data\cpp\aaai\ecgame.h
 	<algorithm>
 	<vector>
 	<random>
 	<time.h>
 	"Node.h"
 	"tool.h"
+	"main.h"
 
 1512092812 d:\data\cpp\aaai\tool.h
 	<vector>
@@ -67,17 +68,18 @@
 1512120640 source:d:\data\cpp\aaai\tool.cpp
 	"tool.h"
 
-1512726619 source:d:\data\cpp\aaai\main.cpp
+1513598686 source:d:\data\cpp\aaai\main.cpp
 	<fstream>
 	<stdlib.h>
 	<iostream>
 	<sstream>
 	<vector>
 	<time.h>
+	<algorithm>
 	"Node.h"
 	"tool.h"
 	"ECgame.h"
 	"main.h"
 
-1512092811 d:\data\cpp\aaai\main.h
+1513577617 d:\data\cpp\aaai\main.h
 
