@@ -191,3 +191,18 @@
 1512652950 source:d:\data\cpp\aaai_emum\nosubsidy\tool.cpp
 	"tool.h"
 
+1512903225 source:d:\data\cpp\aaai_emum\nosubsidy\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<windows.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1512092811 d:\data\cpp\aaai_emum\nosubsidy\main.h
+

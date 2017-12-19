@@ -249,16 +249,16 @@ int main()
         to_vaccinate.push_back(k);
     }
     vector<int> numpy;
-    for(int num = 0;num<ECgame::size;num++)
-    {
-        stringstream ss;
-        ss<<"result\\index_NULL";
-        CreateDirectory(ss.str().c_str(), NULL);
-        ss<<"\\"<<num<<".txt";
-        cout<<ss.str()<<endl;
-        ofstream outfile(ss.str());
-        enumerate(outfile, ne,num, to_vaccinate,numpy);
-    }
+//    for(int num = 0;num<ECgame::size;num++)
+//    {
+//        stringstream ss;
+//        ss<<"result\\index_NULL";
+//        CreateDirectory(ss.str().c_str(), NULL);
+//        ss<<"\\"<<num<<".txt";
+//        cout<<ss.str()<<endl;
+//        ofstream outfile(ss.str());
+//        enumerate(outfile, ne,num, to_vaccinate,numpy);
+//    }
     ofstream outfile("max NE.txt");
     ofstream outfile1("max data.txt");
     while(frac<1)
@@ -266,12 +266,13 @@ int main()
         double l = ne.lambda1 * frac;
         vector<double> result;
         result=find_maxNE(outfile1, l, ne);
+        //result=find_minNE(outfile1, l);
         for(auto it:result)
         {
             cout<<it<<" ";
             outfile<<it<<" ";
         }
-
+        cout<<endl;
         outfile<<endl;
         frac+=0.1;
     }

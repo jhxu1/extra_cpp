@@ -17,7 +17,7 @@ const float final_point = 1;
 const float first_point = 0.2;
 
 float frac = 0.2;
-const int subsidyNum = 20;
+const int subsidyNum = 100;
 
 vector<int> load_EI_sort()
 {
@@ -60,8 +60,8 @@ int main()
     vector<Node*> subsidyNode;
     for(int i=0;i<subsidyNum;i++)
     {
-        int index = EI_sort[i];
-        //int index = degree_sort[i];
+        //int index = EI_sort[i];
+        int index = degree_sort[i];
         cout<<index<<endl;
         subsidyNode.push_back(ne.nodes[index]);
     }

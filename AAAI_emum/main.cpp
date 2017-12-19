@@ -108,6 +108,7 @@ vector<double> find_minNE(ostream &outfile, vector<int> sub_index, double l)
 /*
 功能：寻找最大NE花费
 输入：outfile（输出流）l（阈值T）
+outfile格式：lambda 接种人数 接种对象
 */
 vector<double> find_maxNE(ostream &outfile, vector<int> sub_index, double l, NE &ne)
 {
@@ -190,18 +191,20 @@ vector<double> find_maxNE(ostream &outfile, vector<int> sub_index, double l, NE 
 }
 
 
-vector<double> findmin(vector<vector<double>> V)
+vector<vector<double>> findmin(vector<vector<double>> V)
 {
     double min = 10000;
-    vector<double> result;
+    vector<vector<double>> result;
     for(auto vec:V)
     {
         cout<<vec.size()<<endl;
         if(vec[1] < min)
-        {
             min = vec[1];
-            result = vec;
-        }
+    }
+    for(auto vec:V)
+    {
+        if(vec[1] == min)
+            result.push_back(vec);
     }
     return result;
 }
@@ -268,7 +271,6 @@ int main()
 	double totaltime;
 	start = clock();
     NE ne(node_file);
-    Nosubsidy(ne);
     // 有补助
 //    for(int i=0;i<ECgame::size;i++)
 //    {
@@ -297,27 +299,35 @@ int main()
 //    }
 
 
-//    ofstream outfile("max NE.txt");
-//    ofstream outfile1("max data.txt");
-//    while(frac<1)
-//    {
-//        double l = ne.lambda1 * frac;
-//        vector<vector<double>> results;
-//        for(int i=0;i<ECgame::size;i++)
-//        {
-//            for(int j=i+1;j<ECgame::size;j++)
-//            {
-//                vector<int> sub_index;
-//                sub_index.push_back(i);sub_index.push_back(j);
-//                results.push_back(find_maxNE(outfile1, sub_index, l, ne));
-//            }
-//        }
-//        vector<double> result = findmin(results);
-//        for(auto it:result)
-//            outfile<<it<<" ";
-//        outfile<<endl;
-//        frac+=0.1;
-//    }
+    ofstream outfile("min NE.txt");
+    ofstream outfile1("min data.txt");
+    while(frac<1)
+    {
+        double l = ne.lambda1 * frac;
+        vector<vector<double>> results;
+        for(int i=0;i<ECgame::size;i++)
+        {
+            for(int j=i+1;j<ECgame::size;j++)
+            {
+                vector<int> sub_index;
+                sub_index.push_back(i);sub_index.push_back(j);
+                //results.push_back(find_maxNE(outfile1, sub_index, l, ne));
+                results.push_back(find_minNE(outfile1, sub_index, l));
+            }
+        }
+        vector<vector<double>> result = findmin(results);
+        for(auto i:result)
+        {
+            for(auto it:i)
+            {
+                outfile<<it<<" ";
+            }
+            outfile<<endl;
+        }
+
+
+        frac+=0.1;
+    }
 
 
 
