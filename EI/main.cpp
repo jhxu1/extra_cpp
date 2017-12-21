@@ -11,12 +11,13 @@ using namespace std;
 
 Agent *Player;
 
+int SUMLINKS=17;
 //int SUMLINKS=(SIZE*K)/2;                                          //随机网络
-int SUMLINKS=( ( SIZE*K-(K-2)*INI_NODES )/2 );                      //无标度网络
+//int SUMLINKS=( ( SIZE*K-(K-2)*INI_NODES )/2 );                      //无标度网络
 int *edge_sta;
 int *edge_end;
 
-void Set_Random_net()
+void Set_Random_net(const string &fileName)
 {
     Player=new Agent[SIZE];
     edge_sta=new int[SUMLINKS];
@@ -25,7 +26,7 @@ void Set_Random_net()
 
 
     ifstream infile;
-    infile.open("sc-free.txt");
+    infile.open(fileName);
     int i;
 
     for(i=0;i<SIZE;i++)
@@ -62,6 +63,8 @@ void Set_Random_net()
     delete []edge_end;
 }  //finish the found of network
 
+
+
 void Destroy( struct Agent *p )                                 //销毁动态数组
 {
     int i;
@@ -78,7 +81,7 @@ int main()
 
     clock_t start=clock();
     cout<<"开始导入网络"<<endl;
-    Set_Random_net();
+    Set_Random_net("random.txt");
 
     clock_t end_set=clock();
     double dur=(double)(end_set - start);

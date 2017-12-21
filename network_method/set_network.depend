@@ -1,0 +1,71 @@
+# depslib dependency file v1.0
+1493715449 source:c:\users\augus\desktop\set_network\rng.cpp
+
+1511230598 source:c:\users\augus\desktop\set_network\main.cpp
+	<iostream>
+	"main.h"
+	<ctime>
+	<stdlib.h>
+	<vector>
+	<fstream>
+	"RNG.h"
+	<ctime>
+	<cstdlib>
+	<math.h>
+
+1511233169 c:\users\augus\desktop\set_network\main.h
+	<vector>
+
+1493715448 c:\users\augus\desktop\set_network\rng.h
+
+1510972453 source:c:\users\augus\desktop\研究生工作\set_network\main.cpp
+	<iostream>
+	"main.h"
+	<ctime>
+	<stdlib.h>
+	<vector>
+	<fstream>
+	"RNG.h"
+	<ctime>
+	<cstdlib>
+
+1510972471 c:\users\augus\desktop\研究生工作\set_network\main.h
+	<vector>
+
+1493715448 c:\users\augus\desktop\研究生工作\set_network\rng.h
+
+1493715449 source:c:\users\augus\desktop\研究生工作\set_network\rng.cpp
+
+1511230598 source:d:\data\cpp\set_network\main.cpp
+	<iostream>
+	"main.h"
+	<ctime>
+	<stdlib.h>
+	<vector>
+	<fstream>
+	"RNG.h"
+	<ctime>
+	<cstdlib>
+	<math.h>
+
+1512702735 d:\data\cpp\set_network\main.h
+	<vector>
+
+1493715448 d:\data\cpp\set_network\rng.h
+
+1493715449 source:d:\data\cpp\set_network\rng.cpp
+
+1493715449 source:d:\data\cpp\network_method\rng.cpp
+
+1513859895 source:d:\data\cpp\network_method\main.cpp
+	<vector>
+	<fstream>
+	<iostream>
+	<stdlib.h>
+	"main.h"
+	"RNG.h"
+
+1513859512 d:\data\cpp\network_method\main.h
+
+1493715448 d:\data\cpp\network_method\rng.h
+

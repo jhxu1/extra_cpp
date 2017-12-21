@@ -1,0 +1,252 @@
+# depslib dependency file v1.0
+1512046365 source:c:\users\augus\desktop\codeblock\aaai\ecgame.cpp
+
+1512041479 c:\users\augus\desktop\codeblock\aaai\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<time.h>
+	"Node.h"
+	"tool.h"
+
+1512041157 c:\users\augus\desktop\codeblock\aaai\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1509100818 c:\users\augus\desktop\codeblock\aaai\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1512045929 source:c:\users\augus\desktop\codeblock\aaai\node.cpp
+	"Node.h"
+
+1511265059 source:c:\users\augus\desktop\codeblock\aaai\tool.cpp
+	"tool.h"
+
+1512046414 source:c:\users\augus\desktop\codeblock\aaai\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1508315945 c:\users\augus\desktop\codeblock\aaai\main.h
+
+1512182194 source:d:\data\cpp\aaai\ecgame.cpp
+
+1512113556 source:d:\data\cpp\aaai\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1512115874 d:\data\cpp\aaai\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<time.h>
+	"Node.h"
+	"tool.h"
+
+1512092812 d:\data\cpp\aaai\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1512120640 source:d:\data\cpp\aaai\tool.cpp
+	"tool.h"
+
+1512182192 source:d:\data\cpp\aaai\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1512092811 d:\data\cpp\aaai\main.h
+
+1512113556 source:d:\data\cpp\aaai小算例实验\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai小算例实验\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1512115874 d:\data\cpp\aaai小算例实验\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<time.h>
+	"Node.h"
+	"tool.h"
+
+1512092812 d:\data\cpp\aaai小算例实验\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1512652950 source:d:\data\cpp\aaai小算例实验\tool.cpp
+	"tool.h"
+
+1512713270 source:d:\data\cpp\aaai小算例实验\ecgame.cpp
+
+1512718371 source:d:\data\cpp\aaai小算例实验\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1512092811 d:\data\cpp\aaai小算例实验\main.h
+
+1512713270 source:d:\data\cpp\aaai_emum\ecgame.cpp
+
+1512113556 source:d:\data\cpp\aaai_emum\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai_emum\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1512115874 d:\data\cpp\aaai_emum\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<time.h>
+	"Node.h"
+	"tool.h"
+
+1512092812 d:\data\cpp\aaai_emum\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1512652950 source:d:\data\cpp\aaai_emum\tool.cpp
+	"tool.h"
+
+1512900838 source:d:\data\cpp\aaai_emum\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<windows.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1512092811 d:\data\cpp\aaai_emum\main.h
+
+1512713270 source:d:\data\cpp\aaai_emum\nosubsidy\ecgame.cpp
+
+1512113556 source:d:\data\cpp\aaai_emum\nosubsidy\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai_emum\nosubsidy\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1512115874 d:\data\cpp\aaai_emum\nosubsidy\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<time.h>
+	"Node.h"
+	"tool.h"
+
+1512092812 d:\data\cpp\aaai_emum\nosubsidy\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1512652950 source:d:\data\cpp\aaai_emum\nosubsidy\tool.cpp
+	"tool.h"
+
+1512903225 source:d:\data\cpp\aaai_emum\nosubsidy\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<windows.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1512092811 d:\data\cpp\aaai_emum\nosubsidy\main.h
+
+1513845977 source:d:\data\cpp\aaai_relevant\find_maxne\ecgame.cpp
+	<stdexcept>
+	<iterator>
+
+1512113556 source:d:\data\cpp\aaai_relevant\find_maxne\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai_relevant\find_maxne\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1513837463 d:\data\cpp\aaai_relevant\find_maxne\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<time.h>
+	"Node.h"
+	"tool.h"
+
+1512092812 d:\data\cpp\aaai_relevant\find_maxne\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1512652950 source:d:\data\cpp\aaai_relevant\find_maxne\tool.cpp
+	"tool.h"
+
+1513845588 source:d:\data\cpp\aaai_relevant\find_maxne\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<windows.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1512092811 d:\data\cpp\aaai_relevant\find_maxne\main.h
+

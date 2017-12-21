@@ -18,7 +18,7 @@ using namespace std;
 
 #define EMPTY (-SIZE-1)
 #define MAX 10000000
-#define Sq_c 0.03
+#define Sq_c 0.26
 
 
 int *ptr;//做团簇时用，该值为正数指向簇中某一个值，簇中总有一个点指向根节点，非最大值的负值表示该团簇的大小
