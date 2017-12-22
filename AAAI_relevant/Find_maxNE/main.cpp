@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const string node_file = "random.txt";
+const string node_file = "1000sc-free.txt";
 const float final_point = 1;
 const float first_point = 0.2;
 
@@ -243,26 +243,38 @@ int main()
     NE ne(node_file);
 
 
-
-    //k_shell结果
-    ofstream outfile_NEcost("Hk_shell.txt");
-    while(frac<1)
-    {
-        ne.init();
-        double l = ne.lambda1 * frac;
-        outfile_NEcost<<l<<" ";
-        ne.get_NEcost(l,"kshell_sort.txt","Low", outfile_NEcost);
-        outfile_NEcost<<endl;
-        frac+=0.1;
-    }
-//    //EI结果
-//    ofstream outfile_NEcost("LEI.txt");
+//
+//    //k_shell结果
+//    ofstream outfile_NEcost("Lk_shell.txt");
 //    while(frac<1)
 //    {
 //        ne.init();
 //        double l = ne.lambda1 * frac;
 //        outfile_NEcost<<l<<" ";
-//        ne.get_NEcost(l,"EI_sort.txt","Low", outfile_NEcost);
+//        ne.get_NEcost(l,"kshell_sort.txt","Low", outfile_NEcost);
+//        outfile_NEcost<<endl;
+//        frac+=0.1;
+//    }
+    //EI结果
+    ofstream outfile_NEcost("LEI.txt");
+    while(frac<1)
+    {
+        ne.init();
+        double l = ne.lambda1 * frac;
+        outfile_NEcost<<l<<" ";
+        ne.get_NEcost(l,"EI_sort.txt","Low", outfile_NEcost);
+        outfile_NEcost<<endl;
+        frac+=0.1;
+    }
+
+//    //度排序
+//    ofstream outfile_NEcost("LDG.txt");
+//    while(frac<1)
+//    {
+//        ne.init();
+//        double l = ne.lambda1 * frac;
+//        outfile_NEcost<<l<<" ";
+//        ne.get_NEcost(l,"degree_sort.txt","Low", outfile_NEcost);
 //        outfile_NEcost<<endl;
 //        frac+=0.1;
 //    }

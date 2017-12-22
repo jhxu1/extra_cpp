@@ -9,7 +9,7 @@ class Node;
 const double ECgame::C = 1;             //接种花费
 const double ECgame::L = 0;             //未接种未染病花费
 const double ECgame::Le = 2;            //染病花费
-const int ECgame::size = 15;          //节点个数
+const int ECgame::size = 1000;          //节点个数
 const float ECgame::learning_rate = 0.2;	//RLA算法学习率
 double ECgame::T = 0;
 
@@ -93,7 +93,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai, ofstream &outfile)
 	    if(i->strategies ==0)
         {
             vacc_info.push_back(i->getFlag());
-            outfile<<i->getFlag()<<" ";
+            //outfile<<i->getFlag()<<" ";
         }
 	}
 
@@ -224,7 +224,7 @@ double NE::LDG(double t, ofstream &outfile)
 double NE::get_NEcost(double t, const string &fileName, const string &flag, ofstream &outfile)
 {
     cout<<"--------------------------"<<fileName<<"------------------------"<<endl;
-    if(flag!="High" && flag!="Low")
+    if(flag!="High" && flag!="Low")     //High:min NE LOW:max NE
         throw runtime_error("get_NEcost need a High or Low flag");
     ifstream infile(fileName);
     vector<Node*> pai;int a;

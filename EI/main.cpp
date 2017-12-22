@@ -11,9 +11,9 @@ using namespace std;
 
 Agent *Player;
 
-int SUMLINKS=17;
+//int SUMLINKS=17;
 //int SUMLINKS=(SIZE*K)/2;                                          //随机网络
-//int SUMLINKS=( ( SIZE*K-(K-2)*INI_NODES )/2 );                      //无标度网络
+int SUMLINKS=( ( SIZE*K-(K-2)*INI_NODES )/2 );                      //无标度网络
 int *edge_sta;
 int *edge_end;
 
@@ -81,7 +81,7 @@ int main()
 
     clock_t start=clock();
     cout<<"开始导入网络"<<endl;
-    Set_Random_net("random.txt");
+    Set_Random_net("1000sc-free.txt");
 
     clock_t end_set=clock();
     double dur=(double)(end_set - start);

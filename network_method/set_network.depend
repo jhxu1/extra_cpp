@@ -57,15 +57,18 @@
 
 1493715449 source:d:\data\cpp\network_method\rng.cpp
 
-1513859895 source:d:\data\cpp\network_method\main.cpp
+1513936857 source:d:\data\cpp\network_method\main.cpp
 	<vector>
 	<fstream>
 	<iostream>
+	<algorithm>
 	<stdlib.h>
+	<stdexcept>
+	<time.h>
 	"main.h"
 	"RNG.h"
 
-1513859512 d:\data\cpp\network_method\main.h
+1513860155 d:\data\cpp\network_method\main.h
 
 1493715448 d:\data\cpp\network_method\rng.h
 
