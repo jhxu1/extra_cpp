@@ -60,9 +60,17 @@ double NE::iterative_secure(double t,vector<Node*> &pai, ofstream &outfile)
     if(index >= pai.size())
     {
         int vacc_num = count_if(pai.begin(), pai.end(), [](Node* n){return n->strategies == 0;});
-//		restrain_flag();                //重置编号
-		for (auto i : pai)				//重置策略
-			i->strategies = 1;
+        outfile<<vacc_num<<endl;
+        for (auto i : pai)
+        {
+            if(i->strategies ==0)
+            {
+                i->strategies = 1;
+                vacc_info.push_back(i->getFlag());
+                outfile<<i->getFlag()<<" ";
+            }
+
+        }
         return C*vacc_num*1.0;
     }
 
@@ -93,7 +101,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai, ofstream &outfile)
 	    if(i->strategies ==0)
         {
             vacc_info.push_back(i->getFlag());
-            //outfile<<i->getFlag()<<" ";
+            outfile<<i->getFlag()<<" ";
         }
 	}
 

@@ -14,10 +14,10 @@ using namespace std;
 
 const string node_file = "1000sc-free.txt";
 const float final_point = 1;
-const float first_point = 0.2;
+const float first_point = 0.9;
 
 float frac = 0.2;
-const int subsidyNum = 2;
+
 
 /*
 功能：枚举num个人接种的情况，输出在result文件夹中
@@ -53,19 +53,18 @@ void enumerate(ostream &outfile, NE &ne, int num,  vector<int> index, vector<int
 功能：寻找最小NE花费
 输入：outfile（输出流）l（阈值T）
 */
-vector<double> find_minNE(ostream &outfile, vector<int> sub_index, double l)
+vector<double> find_minNE(ostream &outfile, double l)
 {
     int vacc_num = 0;
     int flag = 0;
     ifstream infile;
     vector<double> result;
-    for(int num =0; num<ECgame::size-sub_index.size();num++)
+    for(int num =0; num<ECgame::size;num++)
     {
         if(flag == 1)
             break;
         stringstream ss;
-        ss<<"result\\index_";
-        ss<<sub_index[0]<<","<<sub_index[1]<<"\\";
+        ss<<"result\\index_NULL\\";
         ss<<num<<".txt";
         infile.open(ss.str());
         string s;
@@ -79,8 +78,8 @@ vector<double> find_minNE(ostream &outfile, vector<int> sub_index, double l)
             data.pop_back();
             if(lam < l)
             {
-                vacc_num = num+sub_index.size();
-                outfile<<l<<" "<<vacc_num<<" ";
+                vacc_num = num;
+                outfile<<l<<" "<<vacc_num<<" "<<endl;;
                 result.push_back(l);
                 result.push_back(vacc_num);
                 for(auto it:data)
@@ -90,7 +89,6 @@ vector<double> find_minNE(ostream &outfile, vector<int> sub_index, double l)
                 }
                 outfile<<endl;
                 flag = 1;
-                break;
             }
         }
         infile.close();
@@ -146,7 +144,7 @@ vector<double> find_maxNE(ostream &outfile, double l, NE &ne)
                 if(flag2 == 1)
                 {
                     vacc_num = num;
-                    outfile<<l<<" "<<vacc_num<<" ";
+                    outfile<<l<<" "<<vacc_num<<" "<<endl;;
                     result.push_back(l);result.push_back(vacc_num);
                     for(auto it:data)
                     {
@@ -155,7 +153,6 @@ vector<double> find_maxNE(ostream &outfile, double l, NE &ne)
                     }
                     outfile<<endl;
                     flag = 1;
-                    break;
                 }
             }
         }
@@ -196,43 +193,7 @@ vector<double> findmax(vector<vector<double>> V)
     return result;
 }
 
-void Nosubsidy(NE &ne)
-{
-    vector<int>sub_index;
-    sub_index.push_back(-1);sub_index.push_back(-1);
-    vector<int> to_vaccinate;
-    for(int k=0;k<ECgame::size;k++)
-    {
-        to_vaccinate.push_back(k);
-    }
-    vector<int> numpy;
-    for(int num = 0;num<ECgame::size;num++)
-    {
-        stringstream ss;
-        ss<<"result\\index_NULL";
-        CreateDirectory(ss.str().c_str(), NULL);
-        ss<<"\\"<<num<<".txt";
-        cout<<ss.str()<<endl;
-        ofstream outfile(ss.str());
-        enumerate(outfile, ne,num, to_vaccinate,numpy);
-    }
-    ofstream outfile("max NE.txt");
-    ofstream outfile1("max data.txt");
-    while(frac<1)
-    {
-        double l = ne.lambda1 * frac;
-        vector<double> result;
-        result=find_maxNE(outfile1, l, ne);
-        for(auto it:result)
-        {
-            cout<<it<<" ";
-            outfile<<it<<" ";
-        }
 
-        outfile<<endl;
-        frac+=0.1;
-    }
-}
 
 int main()
 {
@@ -244,37 +205,37 @@ int main()
 
 
 //
-//    //k_shell结果
-//    ofstream outfile_NEcost("Lk_shell.txt");
-//    while(frac<1)
-//    {
-//        ne.init();
-//        double l = ne.lambda1 * frac;
-//        outfile_NEcost<<l<<" ";
-//        ne.get_NEcost(l,"kshell_sort.txt","Low", outfile_NEcost);
-//        outfile_NEcost<<endl;
-//        frac+=0.1;
-//    }
-    //EI结果
-    ofstream outfile_NEcost("LEI.txt");
+    //k_shell结果
+    ofstream outfile_NEcost("Hk_shell.txt");
     while(frac<1)
     {
         ne.init();
         double l = ne.lambda1 * frac;
         outfile_NEcost<<l<<" ";
-        ne.get_NEcost(l,"EI_sort.txt","Low", outfile_NEcost);
+        ne.get_NEcost(l,"kshell_sort.txt","High", outfile_NEcost);
         outfile_NEcost<<endl;
         frac+=0.1;
     }
-
-//    //度排序
-//    ofstream outfile_NEcost("LDG.txt");
+//    EI结果
+//    ofstream outfile_NEcost("HEI.txt");
 //    while(frac<1)
 //    {
 //        ne.init();
 //        double l = ne.lambda1 * frac;
 //        outfile_NEcost<<l<<" ";
-//        ne.get_NEcost(l,"degree_sort.txt","Low", outfile_NEcost);
+//        ne.get_NEcost(l,"EI_sort.txt","High", outfile_NEcost);
+//        outfile_NEcost<<endl;
+//        frac+=0.1;
+//    }
+
+    //度排序
+//    ofstream outfile_NEcost("HDG.txt");
+//    while(frac<1)
+//    {
+//        ne.init();
+//        double l = ne.lambda1 * frac;
+//        outfile_NEcost<<l<<" ";
+//        ne.get_NEcost(l,"degree_sort.txt","High", outfile_NEcost);
 //        outfile_NEcost<<endl;
 //        frac+=0.1;
 //    }
@@ -290,42 +251,42 @@ int main()
 //    }
 
 
-    /*
-    枚举求解最优情况部分
-    vector<int> to_vaccinate;
-    for(int k=0;k<ECgame::size;k++)
-    {
-        to_vaccinate.push_back(k);
-    }
-    vector<int> numpy;
-//    for(int num = 0;num<ECgame::size;num++)
+
+    //枚举求解最优情况部分
+//    vector<int> to_vaccinate;
+//    for(int k=0;k<ECgame::size;k++)
 //    {
-//        stringstream ss;
-//        ss<<"result\\index_NULL";
-//        CreateDirectory(ss.str().c_str(), NULL);
-//        ss<<"\\"<<num<<".txt";
-//        cout<<ss.str()<<endl;
-//        ofstream outfile(ss.str());
-//        enumerate(outfile, ne,num, to_vaccinate,numpy);
+//        to_vaccinate.push_back(k);
 //    }
-    ofstream outfile("max NE.txt");
-    ofstream outfile1("max data.txt");
-    while(frac<1)
-    {
-        double l = ne.lambda1 * frac;
-        vector<double> result;
-        result=find_maxNE(outfile1, l, ne);
-        //result=find_minNE(outfile1, l);
-        for(auto it:result)
-        {
-            cout<<it<<" ";
-            outfile<<it<<" ";
-        }
-        cout<<endl;
-        outfile<<endl;
-        frac+=0.1;
-    }
-    */
+//    vector<int> numpy;
+////    for(int num = 0;num<ECgame::size;num++)
+////    {
+////        stringstream ss;
+////        ss<<"result\\index_NULL";
+////        CreateDirectory(ss.str().c_str(), NULL);
+////        ss<<"\\"<<num<<".txt";
+////        cout<<ss.str()<<endl;
+////        ofstream outfile(ss.str());
+////        enumerate(outfile, ne,num, to_vaccinate,numpy);
+////    }
+//    ofstream outfile("min NE.txt");
+//    ofstream outfile1("min data.txt");
+//    while(frac<1)
+//    {
+//        double l = ne.lambda1 * frac;
+//        vector<double> result;
+//        //result=find_maxNE(outfile1, l, ne);
+//        result=find_minNE(outfile1, l);
+//        for(auto it:result)
+//        {
+//            cout<<it<<" ";
+//            outfile<<it<<" ";
+//        }
+//        cout<<endl;
+//        outfile<<endl;
+//        frac+=0.1;
+//    }
+
 
 
 
