@@ -44,13 +44,10 @@ public:
 	double HDG(double, ofstream &outfile);		//eigenvalue: the eigenValue of HDG produced in the process
 	double LDG(double t, ofstream &outfile);
 	double get_NEcost(double t, const string &fileName, const string &flag, ofstream &outfile);
+	double get_NEcost2(double t, const string &fileName, const string &flag);
 	void RLA_algorithm(double t);
-	void restrain_flag();
-	void subsidy(std::vector<Node*> pai);
+	void subsidy(std::vector<Node*> pai);               //ฒนึ๚
 	void init();
-	std::vector<int> vacc_info;
 private:
 	double iterative_secure(double t,std::vector<Node*> &pai, ofstream &outfile);
-    void remove_flag(int index, std::vector<Node*> &pai);
-    void add_flag(int index, int flag, std::vector<Node*> &pai);
 };

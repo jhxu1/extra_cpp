@@ -9,12 +9,12 @@
 #include "tool.h"
 #include "ECgame.h"
 #include "main.h"
+#include "20171225_method.h"
 
 using namespace std;
 
-const string node_file = "1000sc-free.txt";
-const float final_point = 1;
-const float first_point = 0.9;
+const string node_file = "random.txt";
+
 
 float frac = 0.2;
 
@@ -205,40 +205,30 @@ int main()
 
 
 //
-    //k_shell结果
-    ofstream outfile_NEcost("Hk_shell.txt");
+//    //20171225
+//    ofstream outfile("maxNE_Boarden.txt");
+//    while(frac<1)
+//    {
+//        ne.init();
+//        double l = ne.lambda1 * frac;
+//        outfile<<l<<" ";
+//        int result = BreadthMethod(ne, 1, l);
+//        outfile<<result<<endl;
+//        frac+=0.1;
+//    }
+
+    //1234
+    ofstream outfile("max_EI.txt");
     while(frac<1)
     {
         ne.init();
         double l = ne.lambda1 * frac;
-        outfile_NEcost<<l<<" ";
-        ne.get_NEcost(l,"kshell_sort.txt","High", outfile_NEcost);
-        outfile_NEcost<<endl;
+        outfile<<l<<" ";
+        double result = ne.get_NEcost2(l, "EI_sort.txt", "Max");
+        outfile<<result<<endl;
         frac+=0.1;
     }
-//    EI结果
-//    ofstream outfile_NEcost("HEI.txt");
-//    while(frac<1)
-//    {
-//        ne.init();
-//        double l = ne.lambda1 * frac;
-//        outfile_NEcost<<l<<" ";
-//        ne.get_NEcost(l,"EI_sort.txt","High", outfile_NEcost);
-//        outfile_NEcost<<endl;
-//        frac+=0.1;
-//    }
 
-    //度排序
-//    ofstream outfile_NEcost("HDG.txt");
-//    while(frac<1)
-//    {
-//        ne.init();
-//        double l = ne.lambda1 * frac;
-//        outfile_NEcost<<l<<" ";
-//        ne.get_NEcost(l,"degree_sort.txt","High", outfile_NEcost);
-//        outfile_NEcost<<endl;
-//        frac+=0.1;
-//    }
 
 //    //HDG结果
 //    ofstream outfile_HDG("HDG.txt");

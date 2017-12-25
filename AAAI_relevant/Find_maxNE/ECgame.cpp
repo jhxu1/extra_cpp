@@ -9,7 +9,7 @@ class Node;
 const double ECgame::C = 1;             //接种花费
 const double ECgame::L = 0;             //未接种未染病花费
 const double ECgame::Le = 2;            //染病花费
-const int ECgame::size = 1000;          //节点个数
+const int ECgame::size = 15;          //节点个数
 const float ECgame::learning_rate = 0.2;	//RLA算法学习率
 double ECgame::T = 0;
 
@@ -66,7 +66,6 @@ double NE::iterative_secure(double t,vector<Node*> &pai, ofstream &outfile)
             if(i->strategies ==0)
             {
                 i->strategies = 1;
-                vacc_info.push_back(i->getFlag());
                 outfile<<i->getFlag()<<" ";
             }
 
@@ -100,7 +99,6 @@ double NE::iterative_secure(double t,vector<Node*> &pai, ofstream &outfile)
 	{
 	    if(i->strategies ==0)
         {
-            vacc_info.push_back(i->getFlag());
             outfile<<i->getFlag()<<" ";
         }
 	}
@@ -108,95 +106,6 @@ double NE::iterative_secure(double t,vector<Node*> &pai, ofstream &outfile)
 	return C*vacc_num*1.0;
 }
 
-//迭代求解，不好用，舍弃掉
-//double NE::iterative_secure(double t,vector<Node*> &pai, ofstream &outfile)
-//{
-//	T = t; size_t size = nodes.size();
-//	double l = Tool::getMaxEigen(pai);
-//	cout<<"After subsidy MaxEigen: "<<l<<endl;
-//	size_t num = 0;
-//	double lastl = l;
-//	vector<Node*> vacc;
-//	vector<Node*> unvacc = pai;
-//	int times = 0;
-//	int max_vacc_num = 0;
-//	while(times < 100)
-//    {
-//        times++;
-//        if(!vacc.empty())
-//        {
-//            default_random_engine engine(time(nullptr));
-//            uniform_int_distribution<> dis(0, vacc.size()-1);
-//            int index = dis(engine);
-//            cout<<"index:    -  - - -- - -"<<index<<endl;
-//            auto it = vacc.begin()+index;
-//            (*it)->strategies = 1;
-//            vacc.erase(it);unvacc.insert(unvacc.begin(),*it);
-//            l = Tool::getMaxEigen(unvacc);
-//        }
-//        cout<<"---------stage 1-----------"<<endl;
-//        while ((l > T || l==-1) && !unvacc.empty())
-//        {
-//            Node* n = *unvacc.rbegin();
-//            if(n->strategies == 1)
-//            {
-//                n->strategies = 0;
-//                cout<<"add flag:  "<<n->getFlag()<<endl;
-//                vacc.push_back(n);
-//                unvacc.pop_back();
-//            }
-//            else
-//            {
-//                cout<<"something wrong"<<endl;
-//                continue;
-//            }
-//            l = Tool::getMaxEigen(unvacc);
-//            if(l==-1)
-//                l = lastl;
-//            lastl = l;
-//            num++;
-//            cout<<"<<stage 1>>   num:  "<<num<<"\tmaxeigenV:  "<<l<<endl;
-//        }
-//        cout<<"---------stage 2-----------"<<endl;
-//        for(auto it = vacc.rbegin();it!=vacc.rend();)
-//        {
-//            Node *n = *it;
-//            num--;
-//            n->strategies = 1;unvacc.push_back(n);
-//            cout<<"delete flag:  "<<n->getFlag()<<endl;
-//            l = Tool::getMaxEigen(unvacc);
-//            if(l==-1)
-//                l = lastl;
-//            lastl = l;
-//            //若去接种节点之后，特征值大于T，则重新接种该节点
-//            if(l > T)
-//            {
-//                cout<<"add flag:  "<<n->getFlag()<<endl;
-//                n->strategies = 0;unvacc.pop_back();
-//                it++;num++;
-//            }
-//            else
-//            {
-//                auto it2 = vacc.erase((++it).base());
-//                vector<Node*>::reverse_iterator it3(it2);
-//                it = it3;
-//            }
-//            cout<<"<<stage 2>>   num:  "<<num<<"\tmaxeigenV:  "<<l<<endl;
-//        }
-//        int vacc_num = count_if(vacc.begin(), vacc.end(), [](Node* n){return n->strategies == 0;});
-//        if(vacc_num != vacc.size())
-//            cout<<"error!!!"<<endl;
-//        if(vacc_num > max_vacc_num)
-//            max_vacc_num = vacc_num;
-//    }
-//    outfile<<max_vacc_num<<endl;
-////	for (auto i : vacc)
-////	{
-////        vacc_info.push_back(i->getFlag());
-////        outfile<<i->getFlag()<<" ";
-////	}
-//	return C*max_vacc_num*1.0;
-//}
 
 
 double NE::HDG(double t, ofstream &outfile)
@@ -244,6 +153,53 @@ double NE::get_NEcost(double t, const string &fileName, const string &flag, ofst
     if(flag == "High")
         reverse(pai.begin(),pai.end());
     return iterative_secure(t, pai, outfile);
+}
+
+double NE::get_NEcost2(double t, const string &fileName, const string &flag)
+{
+    init();T = t;
+    cout<<"--------------------------"<<fileName<<"------------------------"<<endl;
+    if(flag!="Max" && flag!="Min")     //High:min NE LOW:max NE
+        throw runtime_error("get_NEcost need a Max or Min flag");
+    ifstream infile(fileName);
+    vector<Node*> pai;int a;
+    while(infile>>a)
+    {
+        if(nodes[a]->ifGetSubsidy == false)
+            pai.push_back(nodes[a]);
+    }
+    if(flag == "Max")
+        reverse(pai.begin(),pai.end());
+
+    double lastl = 0.0;
+    cout<<"---------stage 2-----------"<<endl;
+    for(auto it:pai)
+        it->strategies = 0;
+    for(auto it = pai.rbegin();it!=pai.rend();)
+    {
+        Node *n = *it;
+        n->strategies = 1;
+        cout<<"delete flag:  "<<n->getFlag()<<endl;
+        double l = Tool::getMaxEigen(nodes);
+        if(l==-1)
+            l = lastl;
+        lastl = l;
+        //若去接种节点之后，特征值大于T，则重新接种该节点
+        if(l > T)
+        {
+            cout<<"add flag:  "<<n->getFlag()<<endl;
+            n->strategies = 0;
+            it++;
+        }
+        else
+        {
+            auto it2 = pai.erase((++it).base());
+            vector<Node*>::reverse_iterator it3(it2);
+            it = it3;
+        }
+        cout<<"<<stage 2>>   num:  "<<pai.size()<<"\tmaxeigenV:  "<<l<<endl;
+    }
+    return pai.size();
 }
 
 void NE::RLA_algorithm(double T)
@@ -305,7 +261,6 @@ void NE::subsidy(vector<Node*> pai)
 
 void NE::init()
 {
-    vacc_info.clear();
 	for (auto i : nodes)
 	{
 		i->flag = i->fixflag;

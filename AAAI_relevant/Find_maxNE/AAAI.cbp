@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="20171225_method.cpp" />
+		<Unit filename="20171225_method.h" />
 		<Unit filename="ECgame.cpp" />
 		<Unit filename="ECgame.h" />
 		<Unit filename="Node.cpp" />

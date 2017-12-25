@@ -206,7 +206,7 @@
 
 1512092811 d:\data\cpp\aaai_emum\nosubsidy\main.h
 
-1514000611 source:d:\data\cpp\aaai_relevant\find_maxne\ecgame.cpp
+1514195159 source:d:\data\cpp\aaai_relevant\find_maxne\ecgame.cpp
 	<stdexcept>
 	<iterator>
 
@@ -219,7 +219,7 @@
 	<fstream>
 	"ECgame.h"
 
-1513837463 d:\data\cpp\aaai_relevant\find_maxne\ecgame.h
+1514195319 d:\data\cpp\aaai_relevant\find_maxne\ecgame.h
 	<algorithm>
 	<vector>
 	<random>
@@ -235,7 +235,7 @@
 1512652950 source:d:\data\cpp\aaai_relevant\find_maxne\tool.cpp
 	"tool.h"
 
-1514000596 source:d:\data\cpp\aaai_relevant\find_maxne\main.cpp
+1514195174 source:d:\data\cpp\aaai_relevant\find_maxne\main.cpp
 	<fstream>
 	<stdlib.h>
 	<iostream>
@@ -247,6 +247,19 @@
 	"tool.h"
 	"ECgame.h"
 	"main.h"
+	"20171225_method.h"
 
 1512092811 d:\data\cpp\aaai_relevant\find_maxne\main.h
+
+1514191153 source:d:\data\cpp\aaai_relevant\find_maxne\20171225_method.cpp
+	<vector>
+	<list>
+	<map>
+	<stdexcept>
+	"20171225_method.h"
+
+1514185747 d:\data\cpp\aaai_relevant\find_maxne\20171225_method.h
+	"main.h"
+	"Node.h"
+	"ECgame.h"
 
