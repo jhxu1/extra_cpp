@@ -138,7 +138,9 @@ vector<int> minDeg(const NE &ne, vector<int> vec)
 /*
 方法：首先所有个体都为接种状态，从度最大的节点开始深度优先遍历，判断节点是否需要改变策略
 */
-void DeepMethod(NE &ne,  double T)
+void DFS(vector<Node*> nodes, int n, vector<bool> &flag, double T);
+bool ifAllSelected(vector<bool> flag);
+int DeepMethod(NE &ne,  double T)
 {
     int size = ECgame::size;
     for(auto i:ne.nodes)
@@ -147,11 +149,80 @@ void DeepMethod(NE &ne,  double T)
     for(int i=0;i<size;i++)
         Allindex.push_back(i);
     int maxDegree_index = maxDeg(ne, Allindex)[0];
-
+    vector<bool> flag(size, false);
+    while(!ifAllSelected(flag))
+        DFS(ne.nodes, maxDegree_index, flag, T);
+    int num = count_if(ne.nodes.begin(),ne.nodes.end(),[](Node* n1){return n1->strategies == 0;});
+    cout<<"<<stage 2>>   num:  "<<num<<"\tmaxeigenV:  "<<T<<endl;
+    return num;
 }
-void DFS(vector<Node*> nodes, int n, vector<bool> &flag)
+void DFS(vector<Node*> nodes, int n, vector<bool> &flag, double T)
 {
-    //1 处理节点n
-    //2 改变节点n的标记
-    //3 深度遍历节点n的每一个邻居
+    if(flag[n] == true)
+        return;
+    //cout<<"delete_vacc flag:  "<<n<<endl;
+    flag[n] = true;
+    nodes[n]->strategies = 1;
+    double l = Tool::getMaxEigen(nodes);
+    if(l>T)
+    {
+        nodes[n]->strategies = 0;
+        //cout<<"vacc flag:  "<<n<<endl;
+    }
+    vector<Node*> vec = nodes[n]->nei();
+    sort(vec.begin(),vec.end(),[](Node* n1, Node* n2){return n1->degree()>n2->degree();});
+    for(auto i:vec)
+        DFS(nodes, i->getFlag(), flag, T);
 }
+bool ifAllSelected(vector<bool> flag)
+{
+    for(auto i:flag)
+    {
+        if(i==false)
+            return false;
+    }
+    return true;
+}
+//----------------------------------------------------------------------
+/*
+方法：首先所有个体都为接种状态，然后选择度最大的点开始广度优先搜索，
+*/
+int BreadthMethod2(NE &ne,  double T)
+{
+    cout<<"--------------------"<<T<<"------------------------"<<endl;
+    ne.init();
+    int size = ECgame::size;
+    for(auto i:ne.nodes)
+        i->strategies = 0;
+    vector<int> temp_degree(size, 0);
+
+    for(int times = 0;times<size;times++)
+    {
+        //找目标节点
+        vector<int>::iterator max_index_iter = max_element(temp_degree.begin(),temp_degree.end());
+        vector<int> maxindex_vec;
+        for(int i=0;i<temp_degree.size();i++)
+        {
+            if(temp_degree[i] == *max_index_iter)
+                maxindex_vec.push_back(i);
+        }
+        //找度最大的节点
+        int target_index = maxDeg(ne, maxindex_vec)[0];
+        //cout<<"target_index:   "<<target_index<<endl;
+        temp_degree[target_index] = -(size+1);           //标为负数，不会再被选到
+        ne.nodes[target_index]->strategies = 1;
+        double l = Tool::getMaxEigen(ne.nodes);
+        if(l > T)
+            ne.nodes[target_index]->strategies = 0;
+        else
+        {
+            cout<<target_index<<endl;
+            for(auto i:ne.nodes[target_index]->nei())
+                temp_degree[i->getFlag()] ++;
+        }
+    }
+    int num = count_if(ne.nodes.begin(),ne.nodes.end(),[](Node* n1){return n1->strategies == 0;});
+    return num;
+}
+
+

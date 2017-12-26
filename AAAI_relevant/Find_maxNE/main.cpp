@@ -13,7 +13,7 @@
 
 using namespace std;
 
-const string node_file = "random.txt";
+const string node_file = "1000sc-free.txt";
 
 
 float frac = 0.2;
@@ -205,29 +205,29 @@ int main()
 
 
 //
-//    //20171225
-//    ofstream outfile("maxNE_Boarden.txt");
-//    while(frac<1)
-//    {
-//        ne.init();
-//        double l = ne.lambda1 * frac;
-//        outfile<<l<<" ";
-//        int result = BreadthMethod(ne, 1, l);
-//        outfile<<result<<endl;
-//        frac+=0.1;
-//    }
-
-    //1234
-    ofstream outfile("max_EI.txt");
+    //20171225
+    ofstream outfile("maxNE_Breadth2.txt");
     while(frac<1)
     {
         ne.init();
         double l = ne.lambda1 * frac;
         outfile<<l<<" ";
-        double result = ne.get_NEcost2(l, "EI_sort.txt", "Max");
+        int result = BreadthMethod2(ne, l);
         outfile<<result<<endl;
         frac+=0.1;
     }
+
+    //1234
+//    ofstream outfile("max_EI.txt");
+//    while(frac<1)
+//    {
+//        ne.init();
+//        double l = ne.lambda1 * frac;
+//        outfile<<l<<" ";
+//        double result = ne.get_NEcost2(l, "EI_sort.txt", "Max");
+//        outfile<<result<<endl;
+//        frac+=0.1;
+//    }
 
 
 //    //HDG结果
