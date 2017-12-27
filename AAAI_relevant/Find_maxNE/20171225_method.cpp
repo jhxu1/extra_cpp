@@ -216,12 +216,17 @@ int BreadthMethod2(NE &ne,  double T)
             ne.nodes[target_index]->strategies = 0;
         else
         {
-            cout<<target_index<<endl;
+            //cout<<target_index<<endl;
             for(auto i:ne.nodes[target_index]->nei())
                 temp_degree[i->getFlag()] ++;
         }
     }
     int num = count_if(ne.nodes.begin(),ne.nodes.end(),[](Node* n1){return n1->strategies == 0;});
+    for(auto i:ne.nodes)
+    {
+        if(i->strategies == 0)
+            cout<<i->getFlag()<<endl;
+    }
     return num;
 }
 
