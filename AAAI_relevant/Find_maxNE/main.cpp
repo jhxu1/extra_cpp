@@ -10,14 +10,15 @@
 #include "ECgame.h"
 #include "main.h"
 #include "20171225_method.h"
+#include "20171228_method.h"
 
 using namespace std;
 
 const string node_file = "random.txt";
 
 
-float frac = 0.6;
-
+float frac = 0.2;
+float final_frac = 1;
 
 /*
 功能：枚举num个人接种的情况，输出在result文件夹中
@@ -205,40 +206,40 @@ int main()
 
 
 //
-    //20171225
-//    ofstream outfile("maxNE_Breadth2.txt");
-//    while(frac<0.77)
+    //20171228
+//    ofstream outfile("20161228_maxNE.txt");
+//    while(frac<final_frac)
 //    {
 //        ne.init();
 //        double l = ne.lambda1 * frac;
 //        outfile<<l<<" ";
-//        int result = BreadthMethod2(ne, l);
+//        int result = cluster_improved(ne.nodes, l);
 //        outfile<<result<<endl;
 //        frac+=0.1;
 //    }
 
     //1234
-//    ofstream outfile("max_EI.txt");
-//    while(frac<1)
-//    {
-//        ne.init();
-//        double l = ne.lambda1 * frac;
-//        outfile<<l<<" ";
-//        double result = ne.get_NEcost2(l, "EI_sort.txt", "Max");
-//        outfile<<result<<endl;
-//        frac+=0.1;
-//    }
-
-
-    //HDG结果
-    ofstream outfile_HDG("HDG.txt");
-    while(frac<0.67)
+    ofstream outfile("max_Degree.txt");
+    while(frac<final_frac)
     {
         ne.init();
         double l = ne.lambda1 * frac;
-        outfile_HDG<<l<<" "<<ne.HDG(l, outfile_HDG)<<endl;
+        outfile<<l<<" ";
+        double result = ne.get_NEcost2(l, "degree_sort.txt", "Max");
+        outfile<<result<<endl;
         frac+=0.1;
     }
+
+
+//    //HDG结果
+//    ofstream outfile_HDG("HDG.txt");
+//    while(frac<0.67)
+//    {
+//        ne.init();
+//        double l = ne.lambda1 * frac;
+//        outfile_HDG<<l<<" "<<ne.HDG(l, outfile_HDG)<<endl;
+//        frac+=0.1;
+//    }
 
 
 
