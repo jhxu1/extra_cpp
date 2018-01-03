@@ -11,10 +11,11 @@
 #include "main.h"
 #include "20171225_method.h"
 #include "20171228_method.h"
+#include "20180102_method.h"
 
 using namespace std;
 
-const string node_file = "random.txt";
+const string node_file = "1000sc-free.txt";
 
 
 float frac = 0.2;
@@ -205,6 +206,18 @@ int main()
     NE ne(node_file);
 
 
+    //20180102
+    ofstream outfile("20180102_maxNE.txt");
+    while(frac<final_frac)
+    {
+        ne.init();
+        double l = ne.lambda1 * frac;
+        outfile<<l<<" ";
+        int result = method_20180102(ne, l);
+        outfile<<result<<endl;
+        frac+=0.1;
+    }
+
 //
     //20171228
 //    ofstream outfile("20161228_maxNE.txt");
@@ -219,16 +232,16 @@ int main()
 //    }
 
     //1234
-    ofstream outfile("max_Degree.txt");
-    while(frac<final_frac)
-    {
-        ne.init();
-        double l = ne.lambda1 * frac;
-        outfile<<l<<" ";
-        double result = ne.get_NEcost2(l, "degree_sort.txt", "Max");
-        outfile<<result<<endl;
-        frac+=0.1;
-    }
+//    ofstream outfile("max_Degree.txt");
+//    while(frac<final_frac)
+//    {
+//        ne.init();
+//        double l = ne.lambda1 * frac;
+//        outfile<<l<<" ";
+//        double result = ne.get_NEcost2(l, "degree_sort.txt", "Max");
+//        outfile<<result<<endl;
+//        frac+=0.1;
+//    }
 
 
 //    //HDG结果

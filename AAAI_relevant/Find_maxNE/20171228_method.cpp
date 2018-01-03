@@ -23,7 +23,7 @@ Node* max_degree(vector<Node*> nodes)
     return maxDegree_Node;
 }
 
-////找连接数最少的节点集合（度大于2）
+//////找连接数最少的节点集合（度大于2）
 //vector<Node*> get_min_link_node(vector<Node*> nodes,  map<Node*, int> link_num,  map<Node*, bool> ifchoosed)
 //{
 //    vector<Node*> min_link_node;
@@ -47,29 +47,29 @@ Node* max_degree(vector<Node*> nodes)
 //    return min_link_node;
 //}
 
-//找连接数最duoduodduodudodudoudo的节点集合（度大于2）
-vector<Node*> get_min_link_node(vector<Node*> nodes,  map<Node*, int> link_num,  map<Node*, bool> ifchoosed)
-{
-    vector<Node*> min_link_node;
-    int min_link = 0;
-    vector<Node*> candidate;
-    for(auto i:nodes)
-    {
-        if(i->degree() > 1 && ifchoosed[i] == false)
-            candidate.push_back(i);
-    }
-    for(auto i:candidate)
-    {
-        if( link_num[i] > min_link)
-            min_link = link_num[i];
-    }
-    if(min_link == ECgame::size)
-        min_link = 0;
-    for(auto i:candidate)
-        if(link_num[i] == min_link)
-            min_link_node.push_back(i);
-    return min_link_node;
-}
+////找连接数最duoduodduodudodudoudo的节点集合（度大于2）
+//vector<Node*> get_min_link_node(vector<Node*> nodes,  map<Node*, int> link_num,  map<Node*, bool> ifchoosed)
+//{
+//    vector<Node*> min_link_node;
+//    int min_link = 0;
+//    vector<Node*> candidate;
+//    for(auto i:nodes)
+//    {
+//        if(i->degree() > 1 && ifchoosed[i] == false)
+//            candidate.push_back(i);
+//    }
+//    for(auto i:candidate)
+//    {
+//        if( link_num[i] > min_link)
+//            min_link = link_num[i];
+//    }
+//    if(min_link == ECgame::size)
+//        min_link = 0;
+//    for(auto i:candidate)
+//        if(link_num[i] == min_link)
+//            min_link_node.push_back(i);
+//    return min_link_node;
+//}
 
 //找接种节点
 vector<Node*> get_vacc_nodes(vector<Node*> nodes,  map<Node*, int> link_num,  map<Node*, bool> ifchoosed)

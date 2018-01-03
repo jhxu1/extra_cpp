@@ -9,7 +9,7 @@
 #include "RNG.h"
 
 using namespace std;
-const int SIZE = 15;
+const int SIZE = 1000;
 
 template <typename T>
 void Shuffe(vector<T> &a, int x, int y)
@@ -125,8 +125,8 @@ void k_shell(vector<Node> nodes)
 
 int main()
 {
-    vector<Node> nodes = load_net("random.txt");
+    vector<Node> nodes = load_net("1000random.txt");
     degree_sort(nodes);
-    k_shell(nodes);
+    //k_shell(nodes);
     system("pause");
 }
