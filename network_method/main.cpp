@@ -125,7 +125,7 @@ void k_shell(vector<Node> nodes)
 
 int main()
 {
-    vector<Node> nodes = load_net("1000random.txt");
+    vector<Node> nodes = load_net("1000sc-free.txt");
     degree_sort(nodes);
     //k_shell(nodes);
     system("pause");

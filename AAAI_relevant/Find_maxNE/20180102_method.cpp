@@ -13,7 +13,7 @@ bool ifInfluenced2(Node* n, map<Node*, bool> &ifchoosed)
         return true;
     for(auto i:n->nei())
     {
-        if(i->strategies == 1 && ifchoosed[i] == false)
+        if(i->strategies == 1)
             return true;
     }
     return false;
@@ -60,6 +60,70 @@ double sigmoid(float frac)
     return 1/(1+exp(-10*(frac - 0.5)));
 }
 
+Node* get_targetNode(vector<Node*> nodes, map<Node*, bool> &ifchoosed, map<Node*, double> &score)
+{
+    Node* target_node = nullptr;
+    //计算每个个体的分数
+    bool ifAllZero = true;
+    for(auto i:nodes)
+    {
+        if(ifchoosed[i] == false)
+        {
+            //double f = sigmoid(frac);
+            //double f = frac;
+            //score[i] = (1-f) * UnInfluNei2(i, ifchoosed) + f * clusterNei(i);
+            score[i] = UnInfluNei2(i, ifchoosed) + 0.001*Soc(i, ifchoosed);
+            if(score[i] > 0)
+                ifAllZero = false;
+        }
+    }
+    if(ifAllZero)
+    {
+        for(auto i:nodes)
+        {
+            if(ifchoosed[i] == false)
+            {
+                score[i] = clusterNei(i);
+            }
+        }
+    }
+    double max_score = -1;
+    for(auto i:nodes)
+    {
+        //cout<<i->getFlag()<<"  "<<score[i]<<endl;
+        if(ifchoosed[i] == false && score[i] > max_score)
+        {
+            max_score = score[i];
+            target_node = i;
+        }
+    }
+    return target_node;
+//    //选择相同分数的个体
+//    vector<Node*> candidate;
+//    for(auto i:nodes)
+//    {
+//        if( ifchoosed[i] == false && score[i] == max_score)
+//            candidate.push_back(i);
+//    }
+//    cout<<candidate.size()<<endl;
+//    if(candidate.size() == 1)
+//        target_node = candidate[0];
+//    else
+//    {
+//        cout<<"Same Score~~~~~~"<<endl;
+//        max_score = -1;
+//        for(auto i:candidate)
+//        {
+//            double s = Soc(i, ifchoosed);
+//            if(s > max_score)
+//            {
+//                max_score = s;
+//                target_node = i;
+//            }
+//        }
+//    }
+}
+
 int method_20180102(NE &ne, double T)
 {
     float frac = T/ne.lambda1;
@@ -70,54 +134,11 @@ int method_20180102(NE &ne, double T)
     {
         i->strategies = 0;
         ifchoosed[i] = false;
-        score[i] = 0;
+        score[i] = -0.1;
     }
     for(int t = 0;t < ECgame::size;t++)
     {
-        Node* target_node = nullptr;
-        //计算每个个体的分数
-        for(auto i:nodes)
-        {
-            if(ifchoosed[i] == false)
-            {
-                //double f = sigmoid(frac);
-                double f = frac;
-                score[i] = f * UnInfluNei2(i, ifchoosed) + (1-f) * clusterNei(i);
-            }
-
-        }
-        double max_score = -1;
-        for(auto i:nodes)
-        {
-            //cout<<i->getFlag()<<"  "<<score[i]<<endl;
-            if(ifchoosed[i] == false && score[i] > max_score)
-            {
-                max_score = score[i];
-            }
-        }
-        //选择相同分数的个体
-        vector<Node*> candidate;
-        for(auto i:nodes)
-        {
-            if( ifchoosed[i] == false && score[i] == max_score)
-                candidate.push_back(i);
-        }
-        cout<<candidate.size()<<endl;
-        if(candidate.size() == 1)
-            target_node = candidate[0];
-        else
-        {
-            max_score = -1;
-            for(auto i:candidate)
-            {
-                int s = Soc(i, ifchoosed);
-                if(s > max_score)
-                {
-                    max_score = s;
-                    target_node = i;
-                }
-            }
-        }
+        Node* target_node = get_targetNode(nodes, ifchoosed, score);
         cout<<"target_Node:   "<<target_node->getFlag()<<"  score:  "<<score[target_node];
         ifchoosed[target_node] = true;
         target_node->strategies = 1;
