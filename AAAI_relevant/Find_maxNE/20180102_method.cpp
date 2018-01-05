@@ -60,6 +60,7 @@ double sigmoid(float frac)
     return 1/(1+exp(-10*(frac - 0.5)));
 }
 
+//实验五
 Node* get_targetNode(vector<Node*> nodes, map<Node*, bool> &ifchoosed, map<Node*, double> &score)
 {
     Node* target_node = nullptr;
@@ -207,68 +208,86 @@ int method_20180103(NE &ne, double T)
     {
         i->strategies = 0;
         ifchoosed[i] = false;
-        score[i] = 0;
+        score[i] = -1;
     }
     for(int t = 0;t < ECgame::size;t++)
     {
         Node* target_node = nullptr;
+        vector<Node*> candi;
         if(flag == false)
         {
-            target_node = UnInf_max_element(nodes, ifchoosed);
-            flag = true;
-        }
-        else
-        {
-            vector<Node*> candi;
-            //计算与簇相连的每个个体的分数
             for(auto i:nodes)
             {
                 if(ifchoosed[i] == false)
                 {
-                    int n1 = clusterNei(i), n2 = UnInfluNei2(i, ifchoosed);
-                    if(n1 != 0)
+                    score[i] = UnInfluNei2(i, ifchoosed);
+                    candi.push_back(i);
+                }
+            }
+            flag = true;
+        }
+        else
+        {
+            //计算与簇相连的每个个体的分数
+            bool ifAllZero = true;
+            for(auto i:nodes)
+            {
+                if(ifchoosed[i] == false)
+                {
+                    int n2 = clusterNei(i), n1 = UnInfluNei2(i, ifchoosed);
+                    if(n2 != 0)                     //n1 = 0 的时候没处理
                     {
-                        double f = sigmoid(frac);
-                        score[i] = f * n2 + (1-f) * n1;
+                        //double f = sigmoid(frac);
+                        double f = frac;
+                        score[i] = (1-f) * n2 + f * n1;
                         candi.push_back(i);
                     }
                 }
             }
-            if(candi.size() == 0)
-                cout<<"error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
-            double max_score = -1;
-            for(auto i:candi)
+        }
+        double max_score = -1;
+        for(auto i:candi)
+        {
+            if(ifchoosed[i] == false && score[i] > max_score)
             {
-                //cout<<i->getFlag()<<"  "<<score[i]<<endl;
-                if(ifchoosed[i] == false && score[i] > max_score)
-                {
-                    max_score = score[i];
-                }
-            }
-            //选择相同分数的个体
-            vector<Node*> candidate;
-            for(auto i:candi)
-            {
-                if( ifchoosed[i] == false && score[i] == max_score)
-                    candidate.push_back(i);
-            }
-            cout<<candidate.size()<<endl;
-            if(candidate.size() == 1)
-                target_node = candidate[0];
-            else
-            {
-                max_score = -1;
-                for(auto i:candidate)
-                {
-                    int s = Soc(i, ifchoosed);
-                    if(s > max_score)
-                    {
-                        max_score = s;
-                        target_node = i;
-                    }
-                }
+                max_score = score[i];
+                target_node = i;
             }
         }
+//        if(candi.size() == 0)
+//            cout<<"error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
+//        double max_score = -1;
+//        for(auto i:candi)
+//        {
+//            //cout<<i->getFlag()<<"  "<<score[i]<<endl;
+//            if(ifchoosed[i] == false && score[i] > max_score)
+//            {
+//                max_score = score[i];
+//            }
+//        }
+//        //选择相同分数的个体
+//        vector<Node*> candidate;
+//        for(auto i:candi)
+//        {
+//            if( ifchoosed[i] == false && score[i] == max_score)
+//                candidate.push_back(i);
+//        }
+//        cout<<candidate.size()<<endl;
+//        if(candidate.size() == 1)
+//            target_node = candidate[0];
+//        else
+//        {
+//            max_score = -1;
+//            for(auto i:candidate)
+//            {
+//                int s = Soc(i, ifchoosed);
+//                if(s > max_score)
+//                {
+//                    max_score = s;
+//                    target_node = i;
+//                }
+//            }
+//        }
         cout<<"target_Node:   "<<target_node->getFlag()<<"  score:  "<<score[target_node];
         ifchoosed[target_node] = true;
         target_node->strategies = 1;
