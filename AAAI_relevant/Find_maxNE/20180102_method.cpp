@@ -57,7 +57,7 @@ int Soc(Node* n, map<Node*, bool> &ifchoosed)
 
 double sigmoid(float frac)
 {
-    return 1/(1+exp(-10*(frac - 0.5)));
+    return 1/(1+exp(-10*(frac - 0.7)));
 }
 
 //实验五
@@ -229,7 +229,6 @@ int method_20180103(NE &ne, double T)
         else
         {
             //计算与簇相连的每个个体的分数
-            bool ifAllZero = true;
             for(auto i:nodes)
             {
                 if(ifchoosed[i] == false)
@@ -237,9 +236,10 @@ int method_20180103(NE &ne, double T)
                     int n2 = clusterNei(i), n1 = UnInfluNei2(i, ifchoosed);
                     if(n2 != 0)                     //n1 = 0 的时候没处理
                     {
-                        //double f = sigmoid(frac);
-                        double f = frac;
-                        score[i] = (1-f) * n2 + f * n1;
+                        double f = sigmoid(frac);
+                        //double f = frac;
+                        //score[i] = (1-f) * n2 + f * n1 + 0.001*Soc(i, ifchoosed);
+                        score[i] = f * n2 + (1-f) * n1 + 0.001*Soc(i, ifchoosed);
                         candi.push_back(i);
                     }
                 }
