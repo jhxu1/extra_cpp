@@ -197,8 +197,6 @@ bool ifchange_flag(vector<Node*> nodes, map<Node*, bool> ifchoosed)
     }
     return true;
 }
-
-//最终确定方案----------------------------------------
 int method_20180103(NE &ne, double T)
 {
     float frac = T/ne.lambda1;
