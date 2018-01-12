@@ -90,7 +90,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
 //		restrain_flag();                //重置编号
 		for (auto i : pai)				//重置策略
 			i->strategies = 1;
-        return C*(vacc_num+subsidyNum)*1.0;
+        return C*(vacc_num)*1.0;
     }
 
     while(index < pai.size())
@@ -123,7 +123,7 @@ double NE::iterative_secure(double t,vector<Node*> &pai)
             vacc_info.push_back(i->getFlag());
 	}
 
-	return C*(vacc_num+subsidyNum)*1.0;
+	return C*(vacc_num)*1.0;
 }
 
 double NE::HDG(double t)
@@ -224,3 +224,158 @@ void NE::init()
 	}
 }
 
+//最终确定方案----------------------------------------
+//判断节点是否为已影响节点
+bool ifInfluenced2(Node* n, map<Node*, bool> &ifchoosed)
+{
+    if(n->ifGetSubsidy==true || n->strategies == 1 || ifchoosed[n] == true)
+        return true;
+    for(auto i:n->nei())
+    {
+        if(i->ifGetSubsidy == false && i->strategies == 1)
+            return true;
+    }
+    return false;
+}
+
+//寻找节点n的未影响邻居数
+int UnInfluNei2(Node* n, map<Node*, bool> &ifchoosed)
+{
+    int num = 0;
+    for(auto i:n->nei())
+    {
+        if(ifInfluenced2(i, ifchoosed) == false)
+            num++;
+    }
+    return num;
+}
+
+//邻居中未接种个数
+int clusterNei(Node *n)
+{
+    int num = 0;
+    for(auto i:n->nei())
+    {
+        if(i->strategies == 1)
+            num++;
+    }
+    return num;
+}
+//得到节点n的分数
+int Soc(Node* n, map<Node*, bool> &ifchoosed)
+{
+    int s = 0;
+    for(auto i:n->nei())
+    {
+        if(ifInfluenced2(i, ifchoosed) == false)
+            s += UnInfluNei2(i, ifchoosed);
+    }
+    return s;
+}
+
+
+bool ifchange_flag(vector<Node*> nodes, map<Node*, bool> ifchoosed)
+{
+    vector<Node*> unvacc;
+    for(auto i:nodes)
+    {
+        if(i->strategies == 1)
+        {
+            for(auto j:i->nei())
+            {
+                if(ifchoosed[j] == false)
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
+int maxNE(NE &ne, double T)
+{
+    float frac = T/ne.lambda1;
+    map<Node*, bool> ifchoosed;
+    map<Node*, double> score;
+    bool flag = false;              //用来标记是否有可选节点。如果没有选择影响节点最大的点
+    vector<Node*> nodes;
+    for(auto it:ne.nodes)
+    {
+        if(it->ifGetSubsidy == false)
+            nodes.push_back(it);
+        else
+            ifchoosed[it] = true;
+    }
+    double l = Tool::getMaxEigen(nodes);
+	cout<<"After subsidy MaxEigen: "<<l<<endl;
+    for(auto i:nodes)
+    {
+        i->strategies = 0;
+        ifchoosed[i] = false;
+        score[i] = -1;
+    }
+    for(int t = 0;t < nodes.size() ;t++)
+    {
+        Node* target_node = nullptr;
+        vector<Node*> candi;
+        if(flag == false)
+        {
+            for(auto i:nodes)
+            {
+                if(ifchoosed[i] == false)
+                {
+                    score[i] = UnInfluNei2(i, ifchoosed);
+                    candi.push_back(i);
+                }
+            }
+            flag = true;
+        }
+        else
+        {
+            //计算与簇相连的每个个体的分数
+            for(auto i:nodes)
+            {
+                if(ifchoosed[i] == false)
+                {
+                    int n2 = clusterNei(i), n1 = UnInfluNei2(i, ifchoosed);
+                    if(n2 != 0)                     //n1 = 0 的时候没处理
+                    {
+                        double f = frac;
+                        score[i] = f * n2 + (1-f) * n1 + 0.001*Soc(i, ifchoosed);
+                        candi.push_back(i);
+                    }
+                }
+            }
+        }
+        double max_score = -1;
+        for(auto i:candi)
+        {
+            if(ifchoosed[i] == false && score[i] > max_score)
+            {
+                max_score = score[i];
+                target_node = i;
+            }
+        }
+        if(t == 861)
+            cout<<endl;
+        cout<<"target_Node:   "<<target_node->getFlag()<<"  score:  "<<score[target_node]<<"\t";
+        ifchoosed[target_node] = true;
+        target_node->strategies = 1;
+        double l = Tool::getMaxEigen(nodes);
+        if(l > T)
+        {
+            target_node->strategies = 0;
+            cout<<"  vacc  ";
+        }
+        else
+        {
+            cout<<"  unvacc  ";
+        }
+        cout<<endl;
+        cout<<"lambda:   "<<l<<endl;
+        cout<<"----------------------------------------------------"<<endl;
+        if(ifchange_flag(nodes, ifchoosed))
+            flag = false;               //从true变为false
+    }
+    int num = count_if(nodes.begin(),nodes.end(),[](Node* n){return n->strategies == 0;});
+        return num;
+}

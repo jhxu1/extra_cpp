@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include <random>
+#include <map>
 #include <time.h>
 #include "Node.h"
 #include "tool.h"
@@ -54,3 +55,5 @@ private:
     void remove_flag(int index, std::vector<Node*> &pai);
     void add_flag(int index, int flag, std::vector<Node*> &pai);
 };
+
+int maxNE(NE &ne, double T);

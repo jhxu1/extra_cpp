@@ -83,3 +83,48 @@
 
 1513577617 d:\data\cpp\aaai\main.h
 
+1512113556 source:d:\data\cpp\aaai_relevant\aaai\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai_relevant\aaai\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1515660528 d:\data\cpp\aaai_relevant\aaai\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<map>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"main.h"
+
+1512092812 d:\data\cpp\aaai_relevant\aaai\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1513577617 d:\data\cpp\aaai_relevant\aaai\main.h
+
+1512120640 source:d:\data\cpp\aaai_relevant\aaai\tool.cpp
+	"tool.h"
+
+1515756972 source:d:\data\cpp\aaai_relevant\aaai\ecgame.cpp
+
+1515757027 source:d:\data\cpp\aaai_relevant\aaai\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<algorithm>
+	<random>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
