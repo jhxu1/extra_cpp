@@ -1,0 +1,175 @@
+# depslib dependency file v1.0
+1512046365 source:c:\users\augus\desktop\codeblock\aaai\ecgame.cpp
+
+1512041479 c:\users\augus\desktop\codeblock\aaai\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<time.h>
+	"Node.h"
+	"tool.h"
+
+1512041157 c:\users\augus\desktop\codeblock\aaai\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1509100818 c:\users\augus\desktop\codeblock\aaai\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1512045929 source:c:\users\augus\desktop\codeblock\aaai\node.cpp
+	"Node.h"
+
+1511265059 source:c:\users\augus\desktop\codeblock\aaai\tool.cpp
+	"tool.h"
+
+1512046414 source:c:\users\augus\desktop\codeblock\aaai\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1508315945 c:\users\augus\desktop\codeblock\aaai\main.h
+
+1513599312 source:d:\data\cpp\aaai\ecgame.cpp
+
+1512113556 source:d:\data\cpp\aaai\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1513577644 d:\data\cpp\aaai\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"main.h"
+
+1512092812 d:\data\cpp\aaai\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1512120640 source:d:\data\cpp\aaai\tool.cpp
+	"tool.h"
+
+1513598686 source:d:\data\cpp\aaai\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<algorithm>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1513577617 d:\data\cpp\aaai\main.h
+
+1512113556 source:d:\data\cpp\aaai_relevant\aaai\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai_relevant\aaai\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1515660528 d:\data\cpp\aaai_relevant\aaai\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<map>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"main.h"
+
+1512092812 d:\data\cpp\aaai_relevant\aaai\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1513577617 d:\data\cpp\aaai_relevant\aaai\main.h
+
+1516174057 source:d:\data\cpp\aaai_relevant\aaai\tool.cpp
+	"tool.h"
+
+1516349599 source:d:\data\cpp\aaai_relevant\aaai\ecgame.cpp
+
+1516255907 source:d:\data\cpp\aaai_relevant\aaai\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<algorithm>
+	<random>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+
+1512113556 source:d:\data\cpp\aaai_relevant\aaai_model_write\node.cpp
+	"Node.h"
+
+1512113768 d:\data\cpp\aaai_relevant\aaai_model_write\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1515660528 d:\data\cpp\aaai_relevant\aaai_model_write\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<map>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"main.h"
+
+1512092812 d:\data\cpp\aaai_relevant\aaai_model_write\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1513577617 d:\data\cpp\aaai_relevant\aaai_model_write\main.h
+
+1516174057 source:d:\data\cpp\aaai_relevant\aaai_model_write\tool.cpp
+	"tool.h"
+
+1516431611 source:d:\data\cpp\aaai_relevant\aaai_model_write\ecgame.cpp
+
+1516435535 source:d:\data\cpp\aaai_relevant\aaai_model_write\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<algorithm>
+	<random>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+

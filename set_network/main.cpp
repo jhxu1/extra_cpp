@@ -162,7 +162,7 @@ void Save_net()
     //Set_Random_net();
     Set_SCfree_net();
     //Set_ChungLu_net(2);
-    outfile.open("1000sc-free.txt");
+    outfile.open("100sc-free.txt");
     for(int i=0;i<SUMLINKS;i++)
     {
         outfile<<edge_sta[i]<<" "<<edge_end[i]<<endl;
