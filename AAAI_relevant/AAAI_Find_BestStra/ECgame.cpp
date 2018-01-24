@@ -8,7 +8,7 @@ class Node;
 const double ECgame::C = 0.5;             //接种花费
 const double ECgame::L = 0;             //未接种未染病花费
 const double ECgame::Le = 1;            //染病花费
-const int ECgame::size = 100;          //节点个数
+const int ECgame::size = 1000;          //节点个数
 const float ECgame::learning_rate = 0.2;	//RLA算法学习率
 double ECgame::T = 0;
 
@@ -306,7 +306,7 @@ int maxNE(NE &ne, double T)
             ifchoosed[it] = true;
     }
     double l = Tool::getMaxEigen(nodes);
-	//cout<<"After subsidy MaxEigen: "<<l<<endl;
+	cout<<"After subsidy MaxEigen: "<<l<<endl;
     for(auto i:nodes)
     {
         i->strategies = 0;
@@ -355,22 +355,22 @@ int maxNE(NE &ne, double T)
                 target_node = i;
             }
         }
-        //cout<<"target_Node:   "<<target_node->getFlag()<<"  score:  "<<score[target_node]<<"\t";
+        cout<<"target_Node:   "<<target_node->getFlag()<<"  score:  "<<score[target_node]<<"\t";
         ifchoosed[target_node] = true;
         target_node->strategies = 1;
         double l = Tool::getMaxEigen(nodes);
         if(l > T)
         {
             target_node->strategies = 0;
-            //cout<<"  vacc  ";
+            cout<<"  vacc  ";
         }
         else
         {
-            //cout<<"  unvacc  ";
+            cout<<"  unvacc  ";
         }
-        //cout<<endl;
-        //cout<<"lambda:   "<<l<<endl;
-        //cout<<"----------------------------------------------------"<<endl;
+        cout<<endl;
+        cout<<"lambda:   "<<l<<endl;
+        cout<<"----------------------------------------------------"<<endl;
         if(ifchange_flag(nodes, ifchoosed))
             flag = false;               //从true变为false
     }

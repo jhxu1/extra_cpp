@@ -13,7 +13,7 @@
 
 using namespace std;
 
-const string node_file = "100sc-free.txt";
+const string node_file = "1000sc-free.txt";
 const float final_point = 1;
 const float first_point = 0.2;
 
@@ -42,6 +42,46 @@ vector<int> load_degree_sort(NE &ne)
     for(auto i:temp)
         degree_sort.push_back(i->getFlag());
     return degree_sort;
+}
+
+vector<int> degree2(NE &ne)
+{
+    vector<Node*> candi;
+    vector<Node*> temp = ne.nodes;
+    sort(temp.begin(), temp.end(), [](Node* &node1, Node* &node2){return node1->degree()>node2->degree();});
+    int times = 0;
+    for(auto i:temp)
+    {
+        bool flag = true;
+        for(auto j:candi)
+        {
+            if(i->ifNei(j))
+            {
+                flag = false;
+                break;
+            }
+        }
+        if(flag == true)
+        {
+            candi.push_back(i);
+            if(times == subsidyNum)
+                break;
+        }
+    }
+    vector<int> result;
+    for(auto i:candi)
+        result.push_back(i->getFlag());
+    return result;
+}
+
+vector<int> load_sort(NE &ne, const string fileName)
+{
+    vector<int> result;
+    ifstream infile(fileName);
+    int a;
+    while(infile >> a)
+        result.push_back(a);
+    return result;
 }
 
 vector<int> random_subsidy(NE &ne)
@@ -79,6 +119,8 @@ vector<int> subsidy_method2(NE &ne, double T)
         else
             it++;
     }
+    for(auto i:minNE)
+        cout<<i<<"\t"<<ne.nodes[i]->degree()<<endl;
     //sort(minNE.begin(),minNE.end(),[&ne](int n1, int n2){return ne.nodes[n1]->degree() > ne.nodes[n2]->degree();});
     //洗扑克
     for(int i=0;i<minNE.size();i++)
@@ -87,6 +129,59 @@ vector<int> subsidy_method2(NE &ne, double T)
         swap(minNE[i], minNE[dis(engine)]);
     }
 
+    return minNE;
+}
+
+//补助最优纳什中接种的，最差纳什中不接种的，选择部分根据度剩余的随机
+vector<int> subsidy_method3(NE &ne, double T)
+{
+    ofstream outfile("subsidy_method3_info.txt",ios::app);
+    //选择最优纳什接种最差纳什不接种个体
+    vector<int> minNE;
+    ne.init();
+    ne.HDG(T);
+    for(auto i:ne.nodes)
+    {
+        if(i->strategies == 0)
+            minNE.push_back(i->getFlag());
+    }
+    ne.init();
+    maxNE(ne,T);
+    for(auto it=minNE.begin();it!=minNE.end();)
+    {
+        if(ne.nodes[*it]->strategies == 0 && minNE.size() > subsidyNum)
+            it = minNE.erase(it);
+        else
+            it++;
+    }
+    //outfile<<"T:\t"<<T<<"size: \t"<<minNE.size()<<endl;
+//    for(auto i:minNE)
+//        outfile<<i<<"\t"<<ne.nodes[i]->degree()<<endl;
+    sort(minNE.begin(),minNE.end(),[&ne](int n1, int n2){return ne.nodes[n1]->degree() > ne.nodes[n2]->degree();});
+    //int k = ceil(subsidyNum*1.0/2);
+    int k = 1;
+    //洗扑克
+
+    int Allresult = 0;
+    for(int t=0;t<100;t++)
+    {
+        for(int i=k;i<minNE.size();i++)
+        {
+            uniform_int_distribution<int> dis(i, minNE.size()-1);
+            swap(minNE[i], minNE[dis(engine)]);
+        }
+        outfile<<"---------------"<<endl;
+        for(int i=0;i<subsidyNum;i++)
+            outfile<<minNE[i]<<"\t"<<ne.nodes[minNE[i]]->degree()<<endl;
+        ne.init();
+        subsidyProcess(ne, minNE);
+        int result = maxNE(ne,T);
+        outfile<<t<<"\t"<<result<<endl;
+        Allresult += result;
+    }
+    Allresult /= 100;
+    outfile<<"------总结果-------"<<endl;
+    outfile<<T<<"\t"<<Allresult<<endl;
     return minNE;
 }
 
@@ -112,219 +207,7 @@ int bet_wheel(vector<double> &score)
         }
     }
 }
-void iter_subsidy(NE &ne, double T)
-{
-    ofstream outfile("iter_info.txt");
-    int NosubsidyCost = 0;
-    double stepLength = 0.5;
-    int MAXTIME = 50;
-    //选择最优纳什接种最差纳什不接种个体
-    vector<int> minNE;
-    ne.init();
-    ne.HDG(T);
-    for(auto i:ne.nodes)
-    {
-        if(i->strategies == 0)
-            minNE.push_back(i->getFlag());
-    }
-    ne.init();
-    NosubsidyCost = maxNE(ne,T);
-    outfile<<"No subsidy max cost:   "<<NosubsidyCost<<endl;
-    for(auto it=minNE.begin();it!=minNE.end();)
-    {
-        if(ne.nodes[*it]->strategies == 0 && minNE.size() > subsidyNum)
-            it = minNE.erase(it);
-        else
-            it++;
-    }
-    //计算分数
-    int cand_size = minNE.size();
-    outfile<<"cand_size:    "<<cand_size<<endl;
-    map<int, int> dict;
-    for(int i=0;i<cand_size;i++)
-    {
-        dict[minNE[i]] = i;
-    }
-    //如果集合中个数小于补助人数
-    if(cand_size <= subsidyNum)
-    {
-        outfile<<"补助人数小于待选节点个数";
-        outfile<<subsidyNum<<endl;
-        return;
 
-    }
-    //计算度补助
-    ne.init();
-    vector<int> temp = load_degree_sort(ne);
-    subsidyProcess(ne, temp);
-    int DegCost = maxNE(ne, T);
-    outfile<<"DegCost:\t"<<DegCost<<endl;
-    for(auto i:temp)
-        outfile<<i<<"\t";
-    outfile<<endl;
-
-    double sumScore = cand_size;
-    vector<double> score(cand_size,1);
-    for(int t=0;t<MAXTIME;t++)
-    {
-        vector<int> subVec(subsidyNum, -1);
-        //赌轮法
-        vector<double> temp_score = score;
-        for(int s=0;s<subsidyNum;s++)
-        {
-            int index = bet_wheel(temp_score);
-            temp_score.erase(temp_score.begin()+index);
-            int num = count_if(subVec.begin(),subVec.end(),[&dict,index](int n1){return n1 != -1 && dict[n1]<=index;});
-            index += num;
-            index = minNE[index];
-            subVec[s] = index;
-        }
-        //计算最差纳什花费
-        ne.init();
-        subsidyProcess(ne, subVec);
-        int maxNeCost = maxNE(ne, T);
-        outfile<<t<<"\t";
-//        for(auto i:subVec)
-//            outfile<<i<<"\t";
-        outfile<<maxNeCost<<endl;
-        //更新score
-        sumScore = 0;
-        for(int i=0;i<subsidyNum;i++)
-        {
-            int index = subVec[i];
-            int id = dict[index];
-            sumScore -= score[id];
-            cout<<index<<"-----"<<id<<"------"<<score[id]<<"\t\t";
-            score[id] += stepLength * (-maxNeCost + NosubsidyCost)/NosubsidyCost;
-            if(score[id]<0)
-                score[id] = 0;
-            sumScore += score[id];
-            cout<<index<<"-----"<<id<<"------"<<score[id]<<endl;
-        }
-    }
-}
-
-void iter_subsidy2(NE &ne, double T)
-{
-    ofstream outfile("iter_info.txt");
-    int NosubsidyCost = 0;
-    double tao = 0.5;
-    int MAXTIME = 3000;
-    ne.init();
-    NosubsidyCost = maxNE(ne,T);
-    outfile<<"无补助花费： "<<NosubsidyCost<<endl;
-    //选择最优纳什接种最差纳什不接种个体
-    vector<int> minNE;
-//    ne.init();
-//    ne.HDG(T);
-//    for(auto i:ne.nodes)
-//    {
-//        if(i->strategies == 0)
-//            minNE.push_back(i->getFlag());
-//    }
-//    ne.init();
-//    NosubsidyCost = maxNE(ne,T);
-//    outfile<<"No subsidy max cost:   "<<NosubsidyCost<<endl;
-//    for(auto it=minNE.begin();it!=minNE.end();)
-//    {
-//        if(ne.nodes[*it]->strategies == 0 && minNE.size() > subsidyNum)
-//            it = minNE.erase(it);
-//        else
-//            it++;
-//    }
-//
-//    sort(minNE.begin(),minNE.end(),[&ne](int n1, int n2){return ne.nodes[n1]->degree() > ne.nodes[n2]->degree();});
-//    ne.init();
-//    subsidyProcess(ne, minNE);
-//    int DegCost2 = maxNE(ne, T);
-//    outfile<<"DegCost2:\t"<<DegCost2<<endl;
-//    for(auto i:minNE)
-//        outfile<<i<<"\t";
-//    outfile<<endl;
-
-    //尝试从所有数据中获取
-    minNE.resize(ECgame::size);
-    for(int i=0;i<minNE.size();i++)
-        minNE[i] = i;
-    //获取字典
-    int cand_size = minNE.size();
-    outfile<<"cand_size:    "<<cand_size<<endl;
-    map<int, int> dict;
-    for(int i=0;i<cand_size;i++)
-    {
-        dict[minNE[i]] = i;
-    }
-    //如果集合中个数小于补助人数
-    if(cand_size <= subsidyNum)
-    {
-        outfile<<"补助人数小于待选节点个数";
-        outfile<<subsidyNum<<endl;
-        return;
-
-    }
-    //计算度补助
-    ne.init();
-    vector<int> temp = load_degree_sort(ne);
-    subsidyProcess(ne, temp);
-    int DegCost = maxNE(ne, T);
-    outfile<<"DegCost:\t"<<DegCost<<endl;
-    for(auto i:temp)
-        outfile<<i<<"\t";
-    outfile<<endl;
-
-    vector<double> Q(cand_size,0);
-    int maxNECost, lastMaxNECost;
-    lastMaxNECost = NosubsidyCost;
-    for(int t=0;t<MAXTIME;t++)
-    {
-        vector<int> subVec(subsidyNum, -1);
-        //计算sumQ
-        vector<double> element(cand_size, 0);
-        double sumQ = 0;
-        for(int i=0;i<cand_size;i++)
-        {
-            element[i] = exp(Q[i]/tao);
-            sumQ += element[i];
-        }
-        //计算每个个体的概率
-        vector<double> pro(cand_size, 0);
-        for(int i=0;i<cand_size;i++)
-            pro[i] = element[i] / sumQ;
-        for(int s=0;s<subsidyNum;s++)
-        {
-            int index = bet_wheel(pro);
-            pro.erase(pro.begin()+index);
-            vector<int> temp_subVec = subVec;
-            sort(temp_subVec.begin(),temp_subVec.end(),[&dict](int n1,int n2){return dict[n1]<dict[n2];});
-            for(int s1 =0;s1<s;s1++)
-            {
-                int in = temp_subVec[s1];
-                if(in!=-1 && dict[in] <= index)
-                    index++;
-            }
-            cout<<"subsidy num: "<<s<<"  index: "<<index<<endl;
-            index = minNE[index];
-            subVec[s] = index;
-        }
-        //计算最差纳什花费
-        ne.init();
-        subsidyProcess(ne, subVec);
-        maxNECost = maxNE(ne, T);
-        outfile<<t<<"\t";
-        for(auto i:subVec)
-            outfile<<i<<"\t";
-        outfile<<maxNECost<<endl;
-        //更新花费
-        for(int i=0;i<subsidyNum;i++)
-        {
-            int index = subVec[i];
-            int id = dict[index];
-            cout<<index<<"-----"<<id<<"------"<<Q[id]<<"\t\t";
-            Q[id] = (1.0/(t+2))*((t+1)*Q[id]+(lastMaxNECost - maxNECost));
-            cout<<index<<"-----"<<id<<"------"<<Q[id]<<endl;
-        }
-    }
-}
 
 void subsidyProcess(NE &ne, vector<int> &subsidy_index)
 {
@@ -336,29 +219,6 @@ void subsidyProcess(NE &ne, vector<int> &subsidy_index)
         subsidyNode.push_back(ne.nodes[index]);
     }
     ne.subsidy(subsidyNode);
-}
-
-vector<int> taxSubsidy(NE &ne,double T)
-{
-    vector<int> subsidy_index;
-    int size = ne.nodes.size();
-    //找最大度
-    int maxD = 0;
-    for(auto i:ne.nodes)
-    {
-       if(i->degree() > maxD)
-            maxD = i->degree();
-    }
-    //计算tax
-    for(auto i:ne.nodes)
-    {
-        double tax = i->degree()/maxD * ECgame::Le * (1-T/ne.getLambda1()) * taxW;
-        if(tax > ECgame::C)
-        {
-            subsidy_index.push_back(i->getFlag());
-        }
-    }
-    return subsidy_index;
 }
 
 
@@ -381,31 +241,31 @@ int main()
 
 	//ґ¦АнЅЪµг
 	NE ne(node_file);
-    iter_subsidy2(ne, 0.4);
-//	ofstream outfile("degree.csv");
-//	Tool::outdegree(outfile, ne.nodes);
-//	outfile.close();
+	ofstream outfile("degree.csv");
+	Tool::outdegree(outfile, ne.nodes);
+	outfile.close();
 
-//	ofstream outfilemin("minNE.txt");
-//	ofstream outfilemax("maxNE.txt");
-//	while(frac<final_point)
-//    {
-//        double t = ne.getLambda1()*frac;
-//        cout<<"****threshold: "<<t<<"  ****"<<endl;
-//        //vector<int> subsidy_index = load_degree_sort(ne);
-//        vector<int> subsidy_index = subsidy_method2(ne,t);
-//        //vector<int> subsidy_index = random_subsidy(ne);
-//        //vector<int> subsidy_index = taxSubsidy(ne, t);
-////        ne.init();
-////        subsidyProcess(ne, subsidy_index);
-////        outfilemin<<t<<"\t"<<ne.HDG(t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
+	ofstream outfilemin("minNE.txt");
+	ofstream outfilemax("maxNE.txt");
+	while(frac<final_point)
+    {
+        double t = ne.getLambda1()*frac;
+        cout<<"****threshold: "<<t<<"  ****"<<endl;
+        vector<int> subsidy_index = load_degree_sort(ne);
+        //vector<int> subsidy_index = load_sort(ne, "kshell_sort.txt");
+        //vector<int> subsidy_index = subsidy_method3(ne,t);
+        //vector<int> subsidy_index = degree2(ne);
+        //vector<int> subsidy_index = random_subsidy(ne);
 //        ne.init();
 //        subsidyProcess(ne, subsidy_index);
-//        outfilemax<<t<<"\t"<<maxNE(ne,t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
-//        //outfilemax<<t<<"\t"<<ne.LDG(t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
-//        get_degree_info(ne);
-//        frac+=0.1;
-//    }
+//        outfilemin<<t<<"\t"<<ne.HDG(t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
+        ne.init();
+        subsidyProcess(ne, subsidy_index);
+        outfilemax<<t<<"\t"<<maxNE(ne,t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
+        //outfilemax<<t<<"\t"<<ne.LDG(t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
+        //get_degree_info(ne);
+        frac+=0.1;
+    }
 
 
 

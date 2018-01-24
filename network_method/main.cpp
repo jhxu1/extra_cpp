@@ -66,6 +66,7 @@ void degree_sort(vector<Node> nodes)
         outfile<<i.flag<<endl;
 }
 
+//根据k_壳选点的顺序
 void k_shell(vector<Node> nodes)
 {
     ofstream outfile("kshell_sort.txt");
@@ -79,7 +80,8 @@ void k_shell(vector<Node> nodes)
         temp_degree[flag] = i.degree;
     }
     int ks = 0;
-    while(true)
+    bool ifAll = true;
+    while(ifAll)
     {
         bool flag = true;
         while(flag)
@@ -105,7 +107,7 @@ void k_shell(vector<Node> nodes)
 
         }
         ks++;
-        bool ifAll = false;
+        ifAll = false;
         for(auto i:k_degree)
         {
             if(i<0)
@@ -114,8 +116,66 @@ void k_shell(vector<Node> nodes)
                 break;
             }
         }
-        if(ifAll == false)
-            break;
+    }
+    reverse(kshell_sort.begin(),kshell_sort.end());
+    for(auto i:kshell_sort)
+        outfile<<i<<endl;
+}
+
+//确定每个点的所在层数，相同层的随机选择
+void k_shell2(vector<Node> nodes)
+{
+    ofstream outfile("kshell_sort.txt");
+    vector<int> kshell_sort;
+    int size = nodes.size();
+    vector<int> k_degree(size,-100);
+    vector<int> temp_degree(size,-100);
+    for(auto i:nodes)
+    {
+        int flag = i.flag;
+        temp_degree[flag] = i.degree;
+    }
+    int ks = 0;
+    bool ifAll = true;
+    while(ifAll)
+    {
+        bool flag = true;
+        vector<int> candi;
+        while(flag)
+        {
+            vector<int> ks_vec;
+            for(int i=0;i<size;i++)
+            {
+                if(temp_degree[i] == ks && k_degree[i]<0)
+                {
+                    cout<<"ks:  "<<ks<<"  index:  "<<i<<endl;
+                    ks_vec.push_back(i);
+                    k_degree[i] = ks;
+                }
+            }
+            if(ks_vec.empty())
+                flag = false;
+            for(auto it:ks_vec)
+            {
+                for(auto it2:nodes[it].neighbours)
+                    temp_degree[it2] -- ;
+            }
+            candi.insert(candi.end(),ks_vec.begin(),ks_vec.end());
+        }
+        if(candi.size()!=0)
+            //打乱candi
+            Shuffe(candi, 0, candi.size()-1);
+        kshell_sort.insert(kshell_sort.end(),candi.begin(),candi.end());
+        ks++;
+        ifAll = false;
+        for(auto i:k_degree)
+        {
+            if(i<0)
+            {
+                ifAll = true;
+                break;
+            }
+        }
     }
     reverse(kshell_sort.begin(),kshell_sort.end());
     for(auto i:kshell_sort)
@@ -123,10 +183,11 @@ void k_shell(vector<Node> nodes)
 }
 
 
+
 int main()
 {
     vector<Node> nodes = load_net("1000sc-free.txt");
-    degree_sort(nodes);
-    //k_shell(nodes);
+    //degree_sort(nodes);
+    k_shell2(nodes);
     system("pause");
 }
