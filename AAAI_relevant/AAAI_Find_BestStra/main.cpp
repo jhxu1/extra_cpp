@@ -13,12 +13,12 @@
 
 using namespace std;
 
-const string node_file = "1000sc-free.txt";
-const float final_point = 1;
+const string node_file = "sc-free.txt";
+const float final_point = 0.56;
 const float first_point = 0.2;
 
 float frac = first_point;
-const int subsidyNum = 2;
+const int subsidyNum = 5;
 float taxW =3;
 
 default_random_engine engine(time(nullptr));
@@ -121,7 +121,7 @@ vector<int> subsidy_method2(NE &ne, double T)
     }
     for(auto i:minNE)
         cout<<i<<"\t"<<ne.nodes[i]->degree()<<endl;
-    //sort(minNE.begin(),minNE.end(),[&ne](int n1, int n2){return ne.nodes[n1]->degree() > ne.nodes[n2]->degree();});
+    //sort(minNE.begin(),minNE.end(),[&ne](int n1, int n2){return ne.nodes[n1]->degree() < ne.nodes[n2]->degree();});
     //洗扑克
     for(int i=0;i<minNE.size();i++)
     {
@@ -159,11 +159,11 @@ vector<int> subsidy_method3(NE &ne, double T)
 //        outfile<<i<<"\t"<<ne.nodes[i]->degree()<<endl;
     sort(minNE.begin(),minNE.end(),[&ne](int n1, int n2){return ne.nodes[n1]->degree() > ne.nodes[n2]->degree();});
     //int k = ceil(subsidyNum*1.0/2);
-    int k = 1;
+    int k = 0;
     //洗扑克
 
     int Allresult = 0;
-    for(int t=0;t<100;t++)
+    for(int t=0;t<30;t++)
     {
         for(int i=k;i<minNE.size();i++)
         {
@@ -179,7 +179,7 @@ vector<int> subsidy_method3(NE &ne, double T)
         outfile<<t<<"\t"<<result<<endl;
         Allresult += result;
     }
-    Allresult /= 100;
+    Allresult /= 30;
     outfile<<"------总结果-------"<<endl;
     outfile<<T<<"\t"<<Allresult<<endl;
     return minNE;
@@ -251,9 +251,9 @@ int main()
     {
         double t = ne.getLambda1()*frac;
         cout<<"****threshold: "<<t<<"  ****"<<endl;
-        vector<int> subsidy_index = load_degree_sort(ne);
+        //vector<int> subsidy_index = load_degree_sort(ne);
         //vector<int> subsidy_index = load_sort(ne, "kshell_sort.txt");
-        //vector<int> subsidy_index = subsidy_method3(ne,t);
+        vector<int> subsidy_index = subsidy_method2(ne,t);
         //vector<int> subsidy_index = degree2(ne);
         //vector<int> subsidy_index = random_subsidy(ne);
 //        ne.init();
@@ -264,7 +264,7 @@ int main()
         outfilemax<<t<<"\t"<<maxNE(ne,t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
         //outfilemax<<t<<"\t"<<ne.LDG(t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
         //get_degree_info(ne);
-        frac+=0.1;
+        frac+=0.05;
     }
 
 
