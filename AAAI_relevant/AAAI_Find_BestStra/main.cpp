@@ -14,12 +14,14 @@
 using namespace std;
 
 const string node_file = "sc-free.txt";
-const float final_point = 0.56;
+const float final_point = 0.52;
 const float first_point = 0.2;
 
 float frac = first_point;
 const int subsidyNum = 5;
 float taxW =3;
+
+const int MAXTIME = 100;
 
 default_random_engine engine(time(nullptr));
 
@@ -39,6 +41,16 @@ vector<int> load_degree_sort(NE &ne)
     vector<int> degree_sort;
     vector<Node*> temp = ne.nodes;
     sort(temp.begin(), temp.end(), [](Node* &node1, Node* &node2){return node1->degree()>node2->degree();});
+    for(auto i:temp)
+        degree_sort.push_back(i->getFlag());
+    return degree_sort;
+}
+
+vector<int> load_min_degree_sort(NE &ne)
+{
+    vector<int> degree_sort;
+    vector<Node*> temp = ne.nodes;
+    sort(temp.begin(), temp.end(), [](Node* &node1, Node* &node2){return node1->degree()<node2->degree();});
     for(auto i:temp)
         degree_sort.push_back(i->getFlag());
     return degree_sort;
@@ -249,19 +261,29 @@ int main()
 	ofstream outfilemax("maxNE.txt");
 	while(frac<final_point)
     {
+        int result = 1000000;
         double t = ne.getLambda1()*frac;
         cout<<"****threshold: "<<t<<"  ****"<<endl;
-        //vector<int> subsidy_index = load_degree_sort(ne);
-        //vector<int> subsidy_index = load_sort(ne, "kshell_sort.txt");
-        vector<int> subsidy_index = subsidy_method2(ne,t);
-        //vector<int> subsidy_index = degree2(ne);
-        //vector<int> subsidy_index = random_subsidy(ne);
-//        ne.init();
-//        subsidyProcess(ne, subsidy_index);
-//        outfilemin<<t<<"\t"<<ne.HDG(t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
-        ne.init();
-        subsidyProcess(ne, subsidy_index);
-        outfilemax<<t<<"\t"<<maxNE(ne,t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
+        vector<int> subsidy_index;
+        for(int time = 0;time<MAXTIME;time++)
+        {
+            //vector<int> subsidy_index = load_degree_sort(ne);
+            //subsidy_index = load_min_degree_sort(ne);
+            //vector<int> subsidy_index = load_sort(ne, "kshell_sort.txt");
+            //vector<int> subsidy_index = subsidy_method2(ne,t);
+            //subsidy_index = degree2(ne);
+            subsidy_index = random_subsidy(ne);
+            //      ne.init();
+            //      subsidyProcess(ne, subsidy_index);
+            //      outfilemin<<t<<"\t"<<ne.HDG(t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
+            ne.init();
+            subsidyProcess(ne, subsidy_index);
+            int num = maxNE(ne,t);
+            if(result > num)
+                result = num;
+            cout<<"Current time:\t"<<time<<"\tCurrent threshold T:\t"<<t<<"\tThe Max NE Cost:\t"<<num<<endl;
+        }
+        outfilemax<<t<<"\t"<<result+min(int(subsidy_index.size()),subsidyNum)<<endl;
         //outfilemax<<t<<"\t"<<ne.LDG(t)+min(int(subsidy_index.size()),subsidyNum)<<endl;
         //get_degree_info(ne);
         frac+=0.05;

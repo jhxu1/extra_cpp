@@ -4,6 +4,7 @@
 #include <fstream>
 #include "ECgame.h"
 
+
 class Node
 {
 	friend std::vector<Node*> inputData(const std::string&);

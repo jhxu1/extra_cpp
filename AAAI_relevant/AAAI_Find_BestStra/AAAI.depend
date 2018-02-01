@@ -173,3 +173,49 @@
 	"ECgame.h"
 	"main.h"
 
+1517382374 source:c:\users\administrator\desktop\cpp-master\aaai_relevant\aaai_find_beststra\ecgame.cpp
+	"Node.h"
+
+1516898274 source:c:\users\administrator\desktop\cpp-master\aaai_relevant\aaai_find_beststra\node.cpp
+	"Node.h"
+
+1517381553 c:\users\administrator\desktop\cpp-master\aaai_relevant\aaai_find_beststra\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1517381068 c:\users\administrator\desktop\cpp-master\aaai_relevant\aaai_find_beststra\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<map>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"main.h"
+
+1516898274 c:\users\administrator\desktop\cpp-master\aaai_relevant\aaai_find_beststra\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1516898274 c:\users\administrator\desktop\cpp-master\aaai_relevant\aaai_find_beststra\main.h
+
+1516898274 source:c:\users\administrator\desktop\cpp-master\aaai_relevant\aaai_find_beststra\tool.cpp
+	"tool.h"
+
+1517382930 source:c:\users\administrator\desktop\cpp-master\aaai_relevant\aaai_find_beststra\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<algorithm>
+	<random>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+

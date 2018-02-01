@@ -1,5 +1,5 @@
 ﻿#include "ECgame.h"
-
+#include "Node.h"
 
 using namespace std;
 
@@ -355,22 +355,22 @@ int maxNE(NE &ne, double T)
                 target_node = i;
             }
         }
-        cout<<"target_Node:   "<<target_node->getFlag()<<"  score:  "<<score[target_node]<<"\t";
+        //cout<<"target_Node:   "<<target_node->getFlag()<<"  score:  "<<score[target_node]<<"\t";
         ifchoosed[target_node] = true;
         target_node->strategies = 1;
         double l = Tool::getMaxEigen(nodes);
         if(l > T)
         {
             target_node->strategies = 0;
-            cout<<"  vacc  ";
+            //cout<<"  vacc  ";
         }
         else
         {
-            cout<<"  unvacc  ";
+            //cout<<"  unvacc  ";
         }
-        cout<<endl;
-        cout<<"lambda:   "<<l<<endl;
-        cout<<"----------------------------------------------------"<<endl;
+        //cout<<endl;
+        //cout<<"lambda:   "<<l<<endl;
+        //cout<<"----------------------------------------------------"<<endl;
         if(ifchange_flag(nodes, ifchoosed))
             flag = false;               //从true变为false
     }

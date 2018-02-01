@@ -18,6 +18,7 @@ class ECgame
 	friend class Node;
 	friend std::vector<Node*> inputData(const std::string&);
 public:
+    void readData(const std::string &filename);
 	ECgame(const std::string &filename) { readData(filename); }
 	virtual ~ECgame() { std::cout << "~EC" << std::endl; deleteNode(nodes); }
 	double getLambda1() { return lambda1; }
@@ -29,7 +30,6 @@ public:
 	static double T;			//T = recoveryRate/transmissionRate
 	std::vector<Node*> nodes;
 	const static int size;
-	void readData(const std::string &filename);
 	double lambda1;				//max eigen value
 };
 
