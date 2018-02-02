@@ -219,3 +219,59 @@
 	"ECgame.h"
 	"main.h"
 
+1517382374 source:d:\cpp_1\aaai_relevant\aaai_find_beststra\ecgame.cpp
+	"Node.h"
+
+1517381553 d:\cpp_1\aaai_relevant\aaai_find_beststra\node.h
+	<vector>
+	<string>
+	<fstream>
+	"ECgame.h"
+
+1517381068 d:\cpp_1\aaai_relevant\aaai_find_beststra\ecgame.h
+	<algorithm>
+	<vector>
+	<random>
+	<map>
+	<time.h>
+	"Node.h"
+	"tool.h"
+	"main.h"
+
+1516898274 d:\cpp_1\aaai_relevant\aaai_find_beststra\tool.h
+	<vector>
+	<iostream>
+	"Node.h"
+
+1517472408 d:\cpp_1\aaai_relevant\aaai_find_beststra\main.h
+	<random>
+
+1517491727 source:d:\cpp_1\aaai_relevant\aaai_find_beststra\main.cpp
+	<fstream>
+	<stdlib.h>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<algorithm>
+	"Node.h"
+	"tool.h"
+	"ECgame.h"
+	"main.h"
+	"GA.h"
+
+1516898274 source:d:\cpp_1\aaai_relevant\aaai_find_beststra\node.cpp
+	"Node.h"
+
+1516898274 source:d:\cpp_1\aaai_relevant\aaai_find_beststra\tool.cpp
+	"tool.h"
+
+1517473471 source:d:\cpp_1\aaai_relevant\aaai_find_beststra\ga.cpp
+	"GA.h"
+	<vector>
+
+1517472855 d:\cpp_1\aaai_relevant\aaai_find_beststra\ga.h
+	"main.h"
+	"Node.h"
+	"ECgame.h"
+

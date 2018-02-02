@@ -34,6 +34,8 @@
 		</Compiler>
 		<Unit filename="ECgame.cpp" />
 		<Unit filename="ECgame.h" />
+		<Unit filename="GA.cpp" />
+		<Unit filename="GA.h" />
 		<Unit filename="Node.cpp" />
 		<Unit filename="Node.h" />
 		<Unit filename="main.cpp" />
